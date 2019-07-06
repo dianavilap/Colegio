@@ -44,6 +44,7 @@ namespace ColegioArceProject.ViewModels
         [Display(Name = "Descripción")]
         public string DescripcionPrecio { get; set; }
 
+        public string Precio { get; set; }
 
         public string DescripcionEscolaridad { get; set; }
 

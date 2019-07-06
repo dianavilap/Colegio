@@ -29,6 +29,7 @@ namespace ColegioArceProject.Models
         public int id_GrupoAlumno { get; set; }
         public string TipoPago { get; set; }
         public int Folio { get; set; }
+        public string DescripcionPago { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Abono> Abono1 { get; set; }

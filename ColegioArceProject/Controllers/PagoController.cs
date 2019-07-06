@@ -39,7 +39,7 @@ namespace ColegioArceProject.Controllers
                     id_pago = pago.id_pago,
                     Fecha = pago.Fecha.ToString("dd/MM/yyyy"),
                     Alumno = pago.GrupoAlumno.Alumno.ApellidoP + " " + pago.GrupoAlumno.Alumno.ApellidoM + " " + pago.GrupoAlumno.Alumno.Nombre,
-                    DescripcionPrecio = pago.Precio.Concepto,
+                    DescripcionPrecio = pago.DescripcionPago,
                     Abonos = pago.Abono1.ToList(),
                     Importe = pago.Importe,
                     folio = pago.Folio
@@ -213,7 +213,8 @@ namespace ColegioArceProject.Controllers
                     Activo = pago.Activo,
                     TipoPago = pago.comoPago,
                     Abono = false,
-                    Folio = folio
+                    Folio = folio,
+                    DescripcionPago = pago.Precio
                 };
 
                 db.Pago.Add(guardarpago);
@@ -238,7 +239,8 @@ namespace ColegioArceProject.Controllers
                     Activo = true,
                     TipoPago = pago.comoPago,
                     Abono = false,
-                    Folio = folio
+                    Folio = folio,
+                    DescripcionPago = pago.Precio.Substring(0,6) + " PROMOCIÓN"
                 };
 
                 db.Pago.Add(promo);
@@ -292,7 +294,8 @@ namespace ColegioArceProject.Controllers
                 Activo = true,
                 TipoPago = pago.comoPago,
                 Abono = true,
-                Folio = folio
+                Folio = folio,
+                DescripcionPago = pago.Precio
             };
 
             db.Pago.Add(guardarpagoabono);
@@ -480,6 +483,7 @@ namespace ColegioArceProject.Controllers
                .ToList();
 
             // PARA ADEUDO DE SEMESTRES ANTERIORES
+            string descripcion = "";
 
             var gruposAnteriores = db.GrupoAlumno.Include(x => x.Grupo).Include(x => x.Grupo.Escolaridad).Include(x => x.Pago).Where(x => x.id_Alumno == id).Where(x => x.Activo == false).ToList();
 
@@ -489,11 +493,14 @@ namespace ColegioArceProject.Controllers
                 if (item.Pago.Where(x => x.Activo == true).ToList().Count < 5)
                 {
                     var pagopendiente = pagos.Where(x => x.id_GrupoAlumno == item.id_GrupoAlumno).OrderBy(x => x.id_pago).LastOrDefault();
-
+                    var totalpagos = 0;
                     if ((pagopendiente.Activo == true) && (pagopendiente.Precio.Importe > pagopendiente.Importe))
                     {
                         var precioabono = db.Precio.Where(x => x.id_Precio == pagopendiente.id_Precio).ToList();
                         var importe = pagopendiente.Precio.Importe - pagopendiente.Importe;
+
+                        //totalpagos = item.Pago.Where(x => x.Activo == true).ToList().Count();
+                        //descripcion = "PAGO " + totalpagos.ToString();
 
                         var valoresabono = precioabono.Select(x => new { Descrpcion = x.Concepto + " " + "$" + importe + ".00", Id = x.id_Precio, Pago = pagopendiente.id_pago, idGrupo = item.id_GrupoAlumno }).ToList();
 
@@ -509,8 +516,12 @@ namespace ColegioArceProject.Controllers
                         return Json(precios.Select(x => new { Descrpcion = x.Concepto + " " + x.Importe.ToString("C"), Id = x.id_Precio, Pago = 0, idGrupo = item.id_GrupoAlumno }).ToList(), JsonRequestBehavior.AllowGet);
                     }
 
+                    totalpagos = item.Pago.Where(x => x.Activo == true).ToList().Count();
+
+                    descripcion = "PAGO " + totalpagos.ToString();
+
                     precios = precios.Where(x => x.id_Precio == 45).ToList();
-                    return Json(precios.Select(x => new { Descrpcion = x.Concepto + " " + x.Importe.ToString("C"), Id = x.id_Precio, Pago = 0, idGrupo = item.id_GrupoAlumno }).ToList(), JsonRequestBehavior.AllowGet);
+                    return Json(precios.Select(x => new { Descrpcion = descripcion + " " + x.Concepto + " " + x.Importe.ToString("C"), Id = x.id_Precio, Pago = 0, idGrupo = item.id_GrupoAlumno }).ToList(), JsonRequestBehavior.AllowGet);
 
                 }
             }
@@ -555,6 +566,9 @@ namespace ColegioArceProject.Controllers
             var rango = db.Rango
                 .Where(x => x.id_Rango != 5)
                 .Where(x => x.Inicio <= dia && x.Fin >= dia).FirstOrDefault();
+
+
+
             switch (noPagos)
             {
                 case 0:
@@ -572,11 +586,13 @@ namespace ColegioArceProject.Controllers
                                 .Where(x => x.id_Escolaridad == escolaridad.id_escolaridad)
                                 .Where(x => x.id_Rango == rango.id_Rango)
                                 .ToList();
+                            descripcion = "PAGO 1";
                             break;
 
 
                         default:
                             precios = precios.Where(x => x.id_Precio == 45).ToList();
+                            descripcion = "PAGO 1";
                             break;
                     }
                     break;
@@ -592,15 +608,18 @@ namespace ColegioArceProject.Controllers
                                 .Where(x => x.id_Escolaridad == escolaridad.id_escolaridad)
                                 .Where(x => x.id_Rango == rango.id_Rango)
                                 .ToList();
+                            descripcion = "PAGO 2";
                             break;
 
                         case 3:
                         case 8:
                         case 11:
                             precios = precios.Where(x => x.id_Precio == 43).ToList();
+                            descripcion = "PAGO 2";
                             break;
                         default:
                             precios = precios.Where(x => x.id_Precio == 45).ToList();
+                            descripcion = "PAGO 2";
                             break;
 
 
@@ -617,6 +636,7 @@ namespace ColegioArceProject.Controllers
                                  .Where(x => x.id_Escolaridad == escolaridad.id_escolaridad)
                                  .Where(x => x.id_Rango == rango.id_Rango)
                                  .ToList();
+                            descripcion = "PAGO 3";
                             break;
                         case 3:
                         case 8:
@@ -625,9 +645,11 @@ namespace ColegioArceProject.Controllers
                         case 9:
                         case 12:
                             precios = precios.Where(x => x.id_Precio == 43).ToList();
+                            descripcion = "PAGO 3";
                             break;
                         default:
                             precios = precios.Where(x => x.id_Precio == 45).ToList();
+                            descripcion = "PAGO 3";
                             break;
 
                     }
@@ -643,6 +665,7 @@ namespace ColegioArceProject.Controllers
                                  .Where(x => x.id_Escolaridad == escolaridad.id_escolaridad)
                                  .Where(x => x.id_Rango == rango.id_Rango)
                                  .ToList();
+                            descripcion = "PAGO 4";
                             break;
 
                         case 3:
@@ -654,9 +677,11 @@ namespace ColegioArceProject.Controllers
                         case 5:
                         case 10:
                             precios = precios.Where(x => x.id_Precio == 43).ToList();
+                            descripcion = "PAGO 4";
                             break;
                         default:
                             precios = precios.Where(x => x.id_Precio == 45).ToList();
+                            descripcion = "PAGO 4";
                             break;
 
                     }
@@ -665,7 +690,7 @@ namespace ColegioArceProject.Controllers
 
 
 
-            var valores = precios.Select(x => new { Descrpcion = x.Concepto + " " + x.Importe.ToString("C"), Id = x.id_Precio, Pago = 0, idGrupo = grupoActual.id_GrupoAlumno }).ToList();
+            var valores = precios.Select(x => new { Descrpcion = descripcion + " " + x.Concepto + " " + x.Importe.ToString("C"), Id = x.id_Precio, Pago = 0, idGrupo = grupoActual.id_GrupoAlumno }).ToList();
 
             return Json(valores, JsonRequestBehavior.AllowGet);
 
@@ -690,7 +715,7 @@ namespace ColegioArceProject.Controllers
 
             Paragraph alumno = new Paragraph("Nombre del Alumno: " + pago.GrupoAlumno.Alumno.Nombre + " " + pago.GrupoAlumno.Alumno.ApellidoP + " " + pago.GrupoAlumno.Alumno.ApellidoM, fontParagraph);
             Paragraph escolaridad = new Paragraph("Grupo y escolaridad: " + pago.GrupoAlumno.Grupo.Descripcion + " " + pago.GrupoAlumno.Grupo.Escolaridad.Descripcion, fontParagraph);
-            Paragraph concepto = new Paragraph("Colegiatura: " + pago.Precio.Concepto, fontParagraph);
+            Paragraph concepto = new Paragraph("Colegiatura: " + pago.DescripcionPago, fontParagraph);
             Paragraph formaPago = new Paragraph("Forma de Pago: " + pago.TipoPago, fontParagraph);
 
             Paragraph fecha = new Paragraph(DateTime.Now.ToString("dd/MM/yyyy"), fontParagraph);
@@ -785,7 +810,7 @@ namespace ColegioArceProject.Controllers
 
             Paragraph alumno = new Paragraph("Nombre del Alumno: " + abono.Pago.GrupoAlumno.Alumno.Nombre + " " + abono.Pago.GrupoAlumno.Alumno.ApellidoP + " " + abono.Pago.GrupoAlumno.Alumno.ApellidoM, fontParagraph);
             Paragraph escolaridad = new Paragraph("Grupo y escolaridad: " + abono.Pago.GrupoAlumno.Grupo.Descripcion + " " + abono.Pago.GrupoAlumno.Grupo.Escolaridad.Descripcion, fontParagraph);
-            Paragraph concepto = new Paragraph("Colegiatura: " + abono.Pago.Precio.Concepto, fontParagraph);
+            Paragraph concepto = new Paragraph("Colegiatura: " + abono.Pago.DescripcionPago, fontParagraph);
             Paragraph formaPago = new Paragraph("Forma de Pago: " + abono.Pago.TipoPago, fontParagraph);
 
             Paragraph fecha = new Paragraph(DateTime.Now.ToString("dd/MM/yyyy"), fontParagraph);

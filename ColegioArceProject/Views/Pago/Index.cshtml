@@ -65,8 +65,8 @@
             <td>
                 @*@Html.ActionLink("Editar", "Edit", new { id = item.id_pago }, new { @class = "btn btn-success btn-sm" }) |
             @Html.ActionLink("Detalles", "Details", new { id = item.id_pago }, new { @class = "btn btn-primary btn-sm" }) |*@
-                @Html.ActionLink("Ver pago", "Details", new { id = item.id_pago }, new { @class = "btn btn-success btn-sm" })
-                @Html.ActionLink("Imprimir Pago", "imprimir", new { id = item.id_pago }, new { @class = "btn btn-info btn-sm" })
+                @Html.ActionLink("Ver", "Details", new { id = item.id_pago }, new { @class = "btn btn-success btn-sm" })
+                @Html.ActionLink("Imprimir", "imprimir", new { id = item.id_pago }, new { @class = "btn btn-info btn-sm" })
                 @if (String.Equals(ViewBag.Rol, "Admin", StringComparison.OrdinalIgnoreCase))
                 {
                     @Html.ActionLink("Cancelar", "Delete", new { id = item.id_pago }, new { @class = "btn btn-danger btn-sm" })

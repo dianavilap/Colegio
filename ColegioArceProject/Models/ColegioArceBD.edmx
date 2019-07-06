@@ -76,6 +76,7 @@
           <Property Name="id_GrupoAlumno" Type="int" Nullable="false" />
           <Property Name="TipoPago" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Folio" Type="int" Nullable="false" />
+          <Property Name="DescripcionPago" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Precio">
           <Key>
@@ -374,6 +375,7 @@
           <NavigationProperty Name="GrupoAlumno" Relationship="Self.FK_Pago_GrupoAlumno" FromRole="Pago" ToRole="GrupoAlumno" />
           <NavigationProperty Name="Precio" Relationship="Self.FK_Pago_Precio" FromRole="Pago" ToRole="Precio" />
           <Property Name="Folio" Type="Int32" Nullable="false" />
+          <Property Name="DescripcionPago" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Precio">
           <Key>
@@ -669,6 +671,7 @@
           <EntitySetMapping Name="Pago">
             <EntityTypeMapping TypeName="ColegioArceBD.Pago">
               <MappingFragment StoreEntitySet="Pago">
+                <ScalarProperty Name="DescripcionPago" ColumnName="DescripcionPago" />
                 <ScalarProperty Name="Folio" ColumnName="Folio" />
                 <ScalarProperty Name="id_pago" ColumnName="id_pago" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
