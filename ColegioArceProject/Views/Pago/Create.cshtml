@@ -1,0 +1,258 @@
+﻿@model ColegioArceProject.ViewModels.PagoViewModel
+
+@{
+    /**/
+
+    ViewBag.Title = "Pago";
+    Layout = "~/Views/Shared/_diseño.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Registrar Pago</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Fecha, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Alumno, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Alumno, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Alumno, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.Label("Pago", htmlAttributes: new { @class = "control-label " })
+                        @Html.RadioButtonFor(model => model.TipoPago, "Pago", new { @checked = true })
+                    </div>
+
+                    <div class="col-md-4">
+                        @Html.Label("Abono", htmlAttributes: new { @class = "control-label " })
+                        @Html.RadioButtonFor(model => model.TipoPago, "Abono")
+                    </div>
+                    @if (String.Equals(ViewBag.Rol, "Admin", StringComparison.OrdinalIgnoreCase))
+                    {
+                        <div class="col-md-4">
+                            @Html.Label("Promoción", htmlAttributes: new { @class = "control-label " })
+                            @Html.RadioButtonFor(model => model.TipoPago, "Promocion")
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Precio", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("Precio", "Actualizando ...", new { @id = "Precio", @class = "form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.id_Precio, "", new { @class = "text-danger" })
+                <p></p>
+                @Html.ActionLink("Estado de Cuenta", "EstadoCuenta", new { }, new { @id = "EstadoC", target = "_blank" })
+
+            </div>
+        </div>
+
+        <div class="form-group" id="divAbono" style="display:none" ;>
+            @Html.Label("Importe de Abono", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Abono, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Abono, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" id="divPromo" style="display:none" ;>
+            @Html.Label("Importe de Promoción", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Promo, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Promo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.comoPago, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("comoPago", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TipoPago, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.DescripcionEscolaridad, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DescripcionEscolaridad, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DescripcionEscolaridad, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Guardar pago" class="btn btn-success" disabled id="btnguardar" />
+                @Html.ActionLink("Cancelar", "Index", new { }, new { @class = "btn btn-danger btn-mini" })
+            </div>
+        </div>
+    </div>
+    @Html.HiddenFor(model => model.id_Alumno)
+    @Html.HiddenFor(model => model.id_Precio)
+    @Html.HiddenFor(model => model.Activo)
+    @Html.HiddenFor(model => model.Fecha)
+    @Html.HiddenFor(model => model.id_pago)
+    @Html.HiddenFor(model => model.id_GrupoAlumno)
+
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#EstadoC").hide();
+            $("input[type='radio']").click(function () {
+                var radioValue = $("input[name='TipoPago']:checked").val();
+
+                if (radioValue) {
+                    switch (radioValue) {
+                        case "Pago":
+                            $("#divAbono").hide();
+                             $("#divPromo").hide();
+
+
+                            break;
+                        case "Abono":
+
+                            $("#divAbono").show();
+                            $("#divPromo").hide();
+
+                            break;
+                        case "Promocion":
+                            $("#divAbono").hide();
+                            $("#divPromo").show();
+
+                    }
+
+                }
+            });
+
+            $("#Alumno").autocomplete({
+                source: function (request, response) {
+                    $("#btnguardar").prop("disabled", true);
+                    $.ajax({
+                        url: '/Pago/GetAlumnos',
+                        datatype: "json",
+                        data: {
+                            Areas: 'Sales',
+                            buscar: request.term
+                        },
+                        success: function (data) {
+                            $.each(data, function (index, value) {
+                                $('#id_Alumno').val(value.id);
+
+
+                            });
+                            response($.map(data, function (val) {
+                                return {
+                                    label: val.Alumno,
+                                    value: val.Alumno,
+                                    id_Alumno: val.id
+                                }
+                            }))
+                        }
+                    })
+                },
+
+                select: function (event, ui) {
+                    $("#Alumno").val(ui.item.id_Alumno);
+                    $("#id_Alumno").val(ui.item.id_Alumno);
+
+                }
+            });
+
+
+            $("#Alumno").change(function () {
+                //  alert("hola");
+                $("#Precio").val("");
+                $.ajax({
+                    url: '/Pago/GetPrecios/' + $("#id_Alumno").val(),
+                    dataType: "json",
+                    //data: { id: $("#id_Alumno").val() },
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (ListaGrupo) {
+                        $.each(ListaGrupo, function (i, grupo) {
+                            $("#Precio").val(grupo.Descrpcion);
+                            $("#id_Precio").val(grupo.Id);
+                            $("#id_pago").val(grupo.Pago);
+                            $("#id_GrupoAlumno").val(grupo.idGrupo);
+                            $("#btnguardar").prop("disabled", false);
+                            $("#EstadoC").show();
+                            document.getElementById("EstadoC").href = "/Pago/EstadoCuenta/" + $("#id_Alumno").val();
+                            //alert(grupo.Descrpcion);
+                        });
+                        //response($.map(ListaGrupo, function (val) {
+                        //    return {
+                        //        label: val.Descrpcion,
+                        //        value: val.Descrpcion,
+                        //        id_Precio: val.Id,
+                        //        id_pago: val.Pago
+                        //    }
+                        //}))
+                    }
+
+                })
+
+            });
+
+
+             //Funcion para mostrar estado de cuenta
+            $(function () {
+                $('#btnEstadoCuenta').on('click', function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Action("EstadoCuenta","Pago")',
+                            dataType: 'json',
+                            data: {
+                                id: $("#id_Alumno").val()
+                            },
+                            success: function (ReporteAlumno) {
+
+
+
+                            },
+                            error: function (ex) {
+                                $('div.spinner-grow').hide();
+                                if ($('#Alumno').val() === '')
+                                    alert('Error. Busque un nombre de alumno (' + ex.message + ')');
+                            }
+                        });
+                });
+                });
+
+
+
+
+
+        });
+
+
+
+
+
+    </script>
+
+
+}

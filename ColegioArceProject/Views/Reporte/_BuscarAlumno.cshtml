@@ -1,0 +1,13 @@
+﻿@model ColegioArceProject.ViewModels.ReporteAlumnoViewModel
+
+<div class="col-md-3"></div>
+<div class="col-md-6 marginbot40">
+    @Html.LabelFor(x => x.Alumno, htmlAttributes: new { @class = "control-label" })
+    @Html.EditorFor(model => model.Alumno, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Alumno, "", new { @class = "text-danger" })
+</div>
+<div class="col-md-3"></div>
+
+<div class="col-md-12 text-center margintop18">
+    <button class="btn btn-outline-success my-2 my-sm-0 " type="submit" id="Buscar">Crear Reporte</button>
+</div>

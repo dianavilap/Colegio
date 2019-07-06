@@ -1,0 +1,47 @@
+﻿@model ColegioArceProject.ViewModels.CreateAlumnoViewModel
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_diseño.cshtml";
+}
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="card">
+        <h5 class="card-header">Está seguro de eliminar al siguiente Alumno?</h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="negrita">@Html.DisplayNameFor(model => model.Nombre)</label>
+                    <p>@Html.DisplayFor(model => model.Nombre)</p>
+                </div>
+                <div class="col-md-3">
+                    <label class="negrita">@Html.DisplayNameFor(model => model.ApellidoP)</label>
+                    <p>@Html.DisplayFor(model => model.ApellidoP)</p>
+                </div>
+                <div class="col-md-6">
+                    <label class="negrita">@Html.DisplayNameFor(model => model.ApellidoM)</label>
+                    <p>@Html.DisplayFor(model => model.ApellidoM)</p>
+                </div>
+                @*<div class="col-md-12">
+                    <label class="negrita"> @Html.DisplayNameFor(model => model.Escolaridad)</label>
+                    <p> @Html.DisplayFor(model => model.Escolaridad)</p>
+                </div>
+                <div class="col-md-12">
+                    <label class="negrita">@Html.DisplayNameFor(model => model.GrupoDescripcion)</label>
+                    <p>@Html.DisplayFor(model => model.GrupoDescripcion)</p>
+                </div>*@
+            </div>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group no-color text-xl-center">
+                    <input type="submit" value="Eliminar" class="btn btn-danger " /> |
+                    @Html.ActionLink("Cancelar", "Index", new { }, new { @class = "btn btn-light" })
+                </div>
+                @Html.HiddenFor(model => model.Activo);
+            }
+        </div>
+    </div>
+</div>

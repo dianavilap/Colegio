@@ -1,0 +1,39 @@
+﻿@model ColegioArceProject.ViewModels.CreateAlumnoViewModel
+
+@*HOLA HOLA @using (Html.BeginForm("BuscarAlumno", "Alumno", FormMethod.Post))
+    {*@
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div class="form-group">
+            @Html.Label("Seleccione Escolaridad: ", htmlAttributes: new { @class = "control-label " })
+            @Html.DropDownListFor(model => model.id_escolaridad, new SelectList(Model.EscolaridadList, "id_escolaridad", "Descripcion"), "-- Seleccionar --", new { @id = "id_escolaridad", @class = "form-control form-control-sm" })
+            @Html.ValidationMessageFor(model => model.id_escolaridad, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Seleccione Grupo: ", htmlAttributes: new { @class = "control-label " })
+            @Html.DropDownListFor(model => model.id_Grupo, new SelectList(Model.GrupoList, "id_Grupo", "Descripcion"), "-- Seleccionar --", new { @id = "id_Grupo", @class = "form-control form-control-sm" })
+            @Html.ValidationMessageFor(model => model.id_Grupo, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group">
+            @Html.Label("Escriba el Nombre: ", htmlAttributes: new { @class = "control-label " })
+            @Html.TextBoxFor(model => model.Nombre, htmlAttributes: new { @class = "form-control form-control-sm" })
+            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.Label("Escriba el Apellido Paterno: ", htmlAttributes: new { @class = "control-label " })
+            @Html.TextBoxFor(model => model.ApellidoP, htmlAttributes: new { @class = "form-control form-control-sm" })
+        </div>
+        <div class="form-group">
+            @Html.Label("Escriba el Apellido Materno: ", htmlAttributes: new { @class = "control-label " })
+            @Html.TextBoxFor(model => model.ApellidoM, htmlAttributes: new { @class = "form-control form-control-sm" })
+        </div>
+        <div class=" text-center">
+            <button class="btn btn-outline-success my-2 my-sm-0 " type="submit" id="Buscar">Buscar</button>
+        </div>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+    <hr>

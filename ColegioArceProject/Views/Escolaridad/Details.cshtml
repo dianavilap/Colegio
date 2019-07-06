@@ -1,0 +1,24 @@
+﻿@model ColegioArceProject.Models.Escolaridad
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_diseño.cshtml";
+}
+
+div class="card marginbot30 ">
+<h2 class="card-header">Detalles de alumno</h2>
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.Descripcion)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Descripcion)
+    </dd>
+
+</dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_escolaridad }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

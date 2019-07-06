@@ -1,0 +1,25 @@
+﻿@model ColegioArceProject.Models.Pago
+@{
+    ViewBag.Title = "Verificar Pago";
+    Layout = "~/Views/Shared/_diseño.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <h2>Datos de Pago</h2>
+        <hr />
+        <span class="padding-top30"></span>
+        <h5><label class="control-label">Nombre del Alumno: </label> @Model.GrupoAlumno.Alumno.Nombre @Model.GrupoAlumno.Alumno.ApellidoP @Model.GrupoAlumno.Alumno.ApellidoM </h5>
+        <h5><label class="control-label">Escolaridad: </label> @Model.GrupoAlumno.Grupo.Escolaridad.Descripcion</h5>
+        <h5><label class="control-label">Grupo:  </label> @Model.GrupoAlumno.Grupo.Descripcion</h5>
+        <h5><label class="control-label">Concepto de pago: </label> @Model.Precio.Concepto</h5>
+        <h5><label class="control-label">Forma de pago: </label> @Model.TipoPago</h5>
+        <br />
+        <h5><label class="control-label">Importe Total Pagado:  </label> @Model.Importe.ToString("C")</h5>
+    </div>
+    <div class="col-sm-12 text-center">
+        <a href="/Pago/imprimir/@Model.id_pago" target="_blank" class="btn btn-lg btn-success">Papeleta de pago</a>
+        <a href="/Pago/Index"  class="btn btn-lg btn-info">Regresar a pagos</a>
+    </div>
+</div>

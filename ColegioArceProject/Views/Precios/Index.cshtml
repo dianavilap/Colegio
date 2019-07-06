@@ -1,0 +1,62 @@
+﻿@model IEnumerable<ColegioArceProject.Models.Precio>
+
+@{
+    ViewBag.Title = "Precios";
+    Layout = "~/Views/Shared/_diseño.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <h2>Precios de colegiaturas</h2>
+
+        <p>
+            @Html.ActionLink("Crear nuevo", "Create", new { }, new { @class = "btn btn-success btn-mini" })
+        </p>
+        <table class="table table-hover table-striped">
+            <tr>
+                <th>
+                    @Html.Label("Concepto")
+                </th>
+                <th>
+                    @Html.Label("Importe")
+                </th>
+                <th>
+                    @Html.Label("Rango de fechas")
+                </th>
+                <th>
+                    @Html.Label("Escolaridad")
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Concepto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Importe)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rango.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Escolaridad.Descripcion)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.id_Precio }, new { @class = "btn btn-success btn-mini" }) |
+                        @*@Html.ActionLink("Detalles", "Details", new { id = item.id_Precio }, new { @class = "btn btn-primary btn-mini" }) |*@
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.id_Precio }, new { @class = "btn btn-danger btn-mini" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+    <div class="col-md-1"></div>
+</div>
+

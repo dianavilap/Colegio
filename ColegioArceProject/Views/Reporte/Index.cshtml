@@ -1,0 +1,224 @@
+﻿@model List<ColegioArceProject.ViewModels.ReporteViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_diseño.cshtml";
+}
+
+<div class="m-5">
+    <div class="row">
+        @Html.Action("BuscarFecha", "Reporte","")
+    </div>
+</div>
+@*@using (Html.BeginForm("ExporttoExcel", "Reporte", FormMethod.Post))
+    {*@
+<table class="text-center table table-hover" id="tablaPagos">
+    <thead id="theadid">
+        <tr>
+            <th>
+
+                @Html.Label("Fecha de Pago")
+            </th>
+            <th>
+                @Html.Label("Folio")
+            </th>
+            <th>
+                @Html.Label("Nombre Alumno")
+            </th>
+            <th>
+                @Html.Label("Concepto de Pago")
+            </th>
+            <th>
+                @Html.Label("Importe")
+            </th>
+            <th></th>
+        </tr>
+    <thead />
+    @foreach (var item in Model)
+    {
+        <tbody id="bodyid">
+            <tr>
+                <td>
+                    @item.Fecha
+                </td>
+                <td>
+                    @Html.DisplayNameFor(modelItem => item.Folio)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(modelItem => item.NombreCompleto)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(modelItem => item.ConceptoPago)
+                </td>
+                <td>
+                   @item.Importe
+                </td>
+                @*<td class="text-center">
+                        @Html.ActionLink("Editar", "Edit", new { id = item.id_Alumno }, new { @class = "btn btn-sm btn-success " }) |
+                        @Html.ActionLink("Detalles", "Details", new { id = item.id_Alumno }, new { @class = "btn btn-sm btn-primary " }) |
+                        @Html.ActionLink("Dar de Baja", "Delete", new { id = item.id_Alumno }, new { @class = "btn btn-sm btn-danger" }) |
+                        @Html.ActionLink("Realizar Pago", "GuardarPagoAlumno", "Pago", new { id = item.id_Alumno }, new { @class = "btn btn-sm btn-secondary" })
+                    </td>*@
+            </tr>
+        </tbody>
+
+    }
+
+</table>
+<button class="btn btn-large btn-success" id="pdf" onclick="window.print()">Generar PDF</button>
+@*<button class="btn btn-outline-success my-2 my-sm-0 " type="submit" id="Excel">Excel</button>*@
+
+@* <button type="submit" id="enviar">Enviar</button>
+    }*@
+
+@*@Html.ActionLink("Exportar a Excel", "ExporttoExcel", "Reporte", new { RouteTable.Routes.}, new { @class = "btn btn-sm btn-secondary" })*@
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#pdf').hide();
+            $('div.spinner-grow').hide();
+
+            $('#Alumno').autocomplete({
+                source: function (request, response) {
+
+                    $.ajax({
+                        url: '/Reporte/GetAlumnos',
+                        datatype: 'json',
+                        data: {
+                            Areas: 'Sales',
+                            buscar: request.term
+                        },
+                        success: function (data) {
+                            $.each(data, function (index, value) {
+                                $('#id_Alumno').val(value.id);
+                            });
+                            response($.map(data, function (val) {
+                                return {
+                                    label: val.Alumno,
+                                    value: val.Alumno,
+                                    id_Alumno: val.id
+                                }
+                            }))
+                        }
+                    })
+                },
+
+                select: function (event, ui) {
+                    $("#Alumno").val(ui.item.id_Alumno);
+                    $("#id_Alumno").val(ui.item.id_Alumno);
+
+                }
+            });
+
+
+            $('#FechaFin').on('change', function () {
+                var fechainicial = document.getElementById("FechaInicio").value;
+                var fechafinal = document.getElementById("FechaFin").value;
+
+                if (Date.parse(fechafinal) < Date.parse(fechainicial)) {
+                    $('#FechaFin').each(function () {
+                        $(this).val('');
+                        alert("La fecha final debe ser mayor a la fecha inicial.");
+                    });
+                }
+            });
+
+            //Funcion para mostrar reporte
+            $(function () {
+                $('#tablaPagos').empty();
+                $('#Buscar').on('click', function () {
+                   $('#bodyid').empty();
+                   $('#tablaPagos').empty();
+                   //$('#tablaPagos tbody>tr').hide();
+                    var fechaI = $('#FechaInicio');
+                    var fechaF = $('#FechaFin');
+                    $('div.spinner-grow').show();
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Action("BuscarFecha","Reporte")',
+                            dataType: 'json',
+                            data: {
+                                FechaInicio: $('#FechaInicio').val(),
+                                FechaFin: $('#FechaFin').val(),
+                                Alumno: $('#Alumno').val(),
+                            },
+                            success: function (Reportevm) {
+                                $('div.spinner-grow').hide();
+                                //$('#tablaAlumnos thead>tr').append('<th>Nombre Completo</th><th>Nombre Completo</th>');
+                                if (Reportevm == '') {
+                                    alert("No hay información para su busqueda.");
+                                } else {
+                                    var th = $('<tr/>');
+                                    th.append('<th> Fecha de Pago </th><th> Folio </th><th> Nombre </th><th> Concepto de Pago </th><th> Metodo de Pago </th><th> Importe </th>');
+                                    $('#tablaPagos').append(th);
+                                    $.each(Reportevm, function (i, Reporte) {
+                                        //var Botones = '<a href="Alumno/Edit/' + Alumno.id_Alumno + '" class="btn btn-sm btn-success">Editar</a> | <a href="Alumno/Details/' + Alumno.id_Alumno + '" class="btn btn-sm btn-primary">Detalles</a> | <a href="Alumno/Delete/' + Alumno.id_Alumno + '" class="btn btn-sm btn-danger">Eliminar</a> | <a href="Pago/GuardarPagoAlumno/' + Alumno.id_Alumno +'" class="btn btn-sm btn-secondary">Registrar Pago</a>';
+                                        var tr = $('<tr/>');
+                                        tr.append('<td>' + Reporte.Fecha + '</td>');
+                                        tr.append('<td>' + Reporte.Folio + '</td>');
+                                        tr.append('<td>' + Reporte.NombreCompleto + '</td>');
+                                        tr.append('<td>' + Reporte.ConceptoPago + '</td>');
+                                        tr.append('<td>' + Reporte.TipoPago + '</td>');
+                                        tr.append('<td>' + Reporte.Importe + '</td>');
+                                        $('#tablaPagos').append(tr);
+                                        $('#pdf').show();
+                                    });
+                                }
+                            },
+                            error: function (ex) {
+                                $('div.spinner-grow').hide();
+                                if (fechaI.val() === '')
+                                    alert('Error. Seleccione fecha inicial para reporte (' + ex.message + ')');
+                                if (fechaF.val() === '')
+                                    alert('Error. Seleccione fecha final para reporte(' + ex.message + ')');
+                            }
+                        });
+                });
+                });
+             //Funcion para crear excel
+            $(function () {
+              $('#Excel').on('click', function () {
+                   var fechaI = $('#FechaInicio');
+                    var fechaF = $('#FechaFin');
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Action("ExporttoExcel", "Reporte")',
+                            dataType: 'Json',
+                            data: {
+                                FechaInicio: $('#FechaInicio').val(),
+                                FechaFin: $('#FechaFin').val(),
+                                Alumno: $('#Alumno').val(),
+
+                            },
+                            success: function (Reportevm) {
+                                if (Reportevm == "") {
+                                    ShowAlert("Ocurrio un error al crear excel.", "alert-danger");
+                                } else {
+                                    ShowAlert("Se creo excel en C:/temp.", "alert-success");
+                                }
+                                $.each(Reportevm, function (i, Reporte) {
+
+                                });
+
+                            },
+                            error: function (ex) {
+                                if (fechaI.val() === '')
+                                    alert('Error. Seleccione fecha inicial para reporte (' + ex.message + ')');
+                                if (fechaF.val() === '0')
+                                    alert('Error. Seleccione fecha final para reporte(' + ex.message + ')');
+                            }
+                        });
+                });
+                });
+
+        });
+
+    </script>
+
+
+
+}
+

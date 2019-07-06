@@ -1,0 +1,68 @@
+﻿@model ColegioArceProject.Models.Pago
+
+@{
+    ViewBag.Title = "Ver pago";
+    Layout = "~/Views/Shared/_diseño.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Detalles de pago</h2>
+        <br />
+        <div class="form-group">
+            <h6>Nombre del alumno: @Model.GrupoAlumno.Alumno.Nombre @Model.GrupoAlumno.Alumno.ApellidoP @Model.GrupoAlumno.Alumno.ApellidoM</h6>
+            <h6>Descripción del pago: @Model.Precio.Concepto</h6>
+            @if (Model.Abono1.Count() <= 0)
+            {
+                <h6>Folio: @Model.Folio</h6>
+                <h6>Fecha de pago: @Model.Fecha.ToString("dd/MM/yyyy")</h6>
+                <h6>Importe: @Model.Importe.ToString("C")</h6>
+            }
+        </div>
+        <br />
+        @if (Model.Abono1.Count() > 0)
+        {
+            <h3>Abonos</h3>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.Label("Folio")
+                    </th>
+                    <th>
+                        @Html.Label("Fecha de pago")
+                    </th>
+                    <th>
+                        @Html.Label("Importe")
+                    </th>
+                    <th>@Html.Label("Tipo de pago")</th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model.Abono1)
+                {
+                    if (item.Cancelado == false)
+                    {
+                        <tr>
+                            <td>@item.Folio</td>
+                            <td>@item.Fecha.ToString("dd/MM/yyyy")</td>
+                            <td>@item.Importe.ToString("C")</td>
+                            <td>@item.TipoPago</td>
+                            <td>
+                                @if (String.Equals(ViewBag.Rol, "Admin", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    @Html.ActionLink("Cancelar", "DeleteAbono", new { id = item.id_Abono }, new { @class = "btn btn-danger btn-sm" })
+                                }
+                                @Html.ActionLink("Imprimir Abono", "imprimirAbono", new { id = item.id_Abono }, new { @class = "btn btn-info btn-sm" })
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+
+            <br />
+            <br />
+        }
+        @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-info btn-sm" })
+    </div>
+</div>

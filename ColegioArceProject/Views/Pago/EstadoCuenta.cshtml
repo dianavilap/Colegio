@@ -1,0 +1,62 @@
+﻿@model ColegioArceProject.ViewModels.ReporteAlumnoViewModel
+
+@{
+    ViewBag.Title = "Alumno";
+    Layout = "~/Views/Shared/_diseño.cshtml";
+}
+
+<p></p>
+<p></p>
+<p></p>
+<div class="Nombre">
+   Nombre:  @Html.DisplayFor(model=>model.Alumno)
+</div>
+<div class="Escolaridad">
+   Escolaridad: @Html.DisplayFor(model => model.Escolaridad)
+</div>
+<div class="Grupo">
+    Grupo: @Html.DisplayFor(model => model.Grupo)
+</div>
+<p></p>
+<table class="text-center table table-hover" id="tablaPagos">
+    <thead id="theadid">
+        <tr>
+            <th>
+                @Html.Label("Fecha")
+            </th>
+            <th>
+                @Html.Label("Folio")
+            </th>
+            <th>
+                @Html.Label("Concepto de Pago")
+            </th>
+            <th>
+                @Html.Label("Importe")
+            </th>
+            <th></th>
+        </tr>
+    <thead />
+    @foreach (var item in Model.ListaPagos)
+    {
+        <tbody id="bodyid">
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Folio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConceptoPago)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Importe)
+                </td>
+            </tr>
+        </tbody>
+
+    }
+
+</table>
+
+

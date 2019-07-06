@@ -1,0 +1,260 @@
+﻿@model ColegioArceProject.ViewModels.CreateAlumnoViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_diseño.cshtml";
+}
+
+
+
+<div class="card marginbot30 ">
+    <h2 class="card-header">Detalles de alumno</h2>
+
+    <div class="card-body">
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.FechaInsc)</label>
+            <p>@Model.FechaInsc.ToString("dd/MM/yyyy")</p>
+            @Html.HiddenFor(model => model.FechaInsc, new { htmlAttributes = new { @Value = Model.FechaInsc, @id = "FechaNac" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.Nombre)</label>
+            <p> @Html.DisplayFor(model => model.Nombre, new { htmlAttributes = new { @Value = Model.Nombre, @id = "Nombre" } })</p>
+            @Html.HiddenFor(model => model.Nombre, new { htmlAttributes = new { @Value = Model.Nombre, @id = "Nombre" } })
+            @*<p> @Html.EditorFor(model => model.Nombre, new { style:'display:none'}, new { htmlAttributes = new { @Value = Model.Nombre, @id = "Nombre" } })</p>*@
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.ApellidoP)</label>
+            <p>@Html.DisplayFor(model => model.ApellidoP)</p>
+            @Html.HiddenFor(model => model.ApellidoP, new { htmlAttributes = new { @Value = Model.ApellidoP, @id = "ApellidoP" } })
+        </div>
+
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.ApellidoM)</label>
+            <p>@Html.DisplayFor(model => model.ApellidoM)</p>
+            @Html.HiddenFor(model => model.ApellidoM, new { htmlAttributes = new { @Value = Model.ApellidoM, @id = "ApellidoM" } })
+        </div>
+
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.FechaNac)</label>
+            <p>@Model.FechaNac.ToString("dd/MM/yyyy")</p>
+            @Html.HiddenFor(model => model.FechaNac, new { htmlAttributes = new { @Value = Model.FechaNac, @id = "FechaNac" } })
+        </div>
+
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.Sexo)</label>
+            <p>@Html.DisplayFor(model => model.Sexo)</p>
+            @Html.HiddenFor(model => model.Sexo, new { htmlAttributes = new { @Value = Model.Sexo, @id = "Sexo" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.Edad)</label>
+            <p>@Html.DisplayFor(model => model.Edad)</p>
+            @Html.HiddenFor(model => model.Edad, new { htmlAttributes = new { @Value = Model.Edad, @id = "TipoSangre" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.TipoSangre)</label>
+            <p>@Html.DisplayFor(model => model.TipoSangre)</p>
+            @Html.HiddenFor(model => model.TipoSangre, new { htmlAttributes = new { @Value = Model.TipoSangre, @id = "TipoSangre" } })
+        </div>
+
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.Alergias)</label>
+            <p>@Html.DisplayFor(model => model.Alergias)</p>
+            @Html.HiddenFor(model => model.Alergias, new { htmlAttributes = new { @Value = Model.Alergias, @id = "Alergias" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.Peso)</label>
+            <p>@Html.DisplayFor(model => model.Peso)</p>
+            @Html.HiddenFor(model => model.Peso, new { htmlAttributes = new { @Value = Model.Peso, @id = "Alergias" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.Estatura)</label>
+            <p>@Html.DisplayFor(model => model.Estatura)</p>
+            @Html.HiddenFor(model => model.Estatura, new { htmlAttributes = new { @Value = Model.Estatura, @id = "Alergias" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.Lesion)</label>
+            <p>@Html.DisplayFor(model => model.Lesion)</p>
+            @Html.HiddenFor(model => model.Lesion, new { htmlAttributes = new { @Value = Model.Lesion, @id = "Alergias" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.TratamientoM)</label>
+            <p>@Html.DisplayFor(model => model.TratamientoM)</p>
+            @Html.HiddenFor(model => model.TratamientoM, new { htmlAttributes = new { @Value = Model.TratamientoM, @id = "Alergias" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.Enfermedad)</label>
+            <p>@Html.DisplayFor(model => model.Enfermedad)</p>
+            @Html.HiddenFor(model => model.Enfermedad, new { htmlAttributes = new { @Value = Model.Enfermedad, @id = "Alergias" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.Lentes)</label>
+            <p>@Html.DisplayFor(model => model.Lentes)</p>
+            @Html.HiddenFor(model => model.Lentes, new { htmlAttributes = new { @Value = Model.Lentes, @id = "Alergias" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.Auditivo)</label>
+            <p>@Html.DisplayFor(model => model.Auditivo)</p>
+            @Html.HiddenFor(model => model.Auditivo, new { htmlAttributes = new { @Value = Model.Auditivo, @id = "Alergias" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.TrasladoAcc)</label>
+            <p>@Html.DisplayFor(model => model.TrasladoAcc)</p>
+            @Html.HiddenFor(model => model.TrasladoAcc, new { htmlAttributes = new { @Value = Model.TrasladoAcc, @id = "Alergias" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.TelEmergencia)</label>
+            <p>@Html.DisplayFor(model => model.TelEmergencia)</p>
+            @Html.HiddenFor(model => model.TelEmergencia, new { htmlAttributes = new { @Value = Model.TelEmergencia, @id = "Alergias" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.ServicioM)</label>
+            <p>@Html.DisplayFor(model => model.ServicioM)</p>
+            @Html.HiddenFor(model => model.ServicioM, new { htmlAttributes = new { @Value = Model.ServicioM, @id = "Alergias" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.Direccion)</label>
+            <p>@Html.DisplayFor(model => model.Direccion)</p>
+            @Html.HiddenFor(model => model.Direccion, new { htmlAttributes = new { @Value = Model.Direccion, @id = "Direccion" } })
+        </div>
+
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.EscuelaP)</label>
+            <p>@Html.DisplayFor(model => model.EscuelaP)</p>
+            @Html.HiddenFor(model => model.EscuelaP, new { htmlAttributes = new { @Value = Model.Direccion, @id = "Direccion" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.tel_A)</label>
+            <p>@Html.DisplayFor(model => model.tel_A)</p>
+            @Html.HiddenFor(model => model.tel_A, new { htmlAttributes = new { @Value = Model.tel_A, @id = "Direccion" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.Nom_mama)</label>
+            <p>@Html.DisplayFor(model => model.Nom_mama)</p>
+            @Html.HiddenFor(model => model.Nom_mama, new { htmlAttributes = new { @Value = Model.Nom_mama, @id = "Nom_mama" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.Correo_m)</label>
+            <p>@Html.DisplayFor(model => model.Correo_m)</p>
+            @Html.HiddenFor(model => model.Correo_m, new { htmlAttributes = new { @Value = Model.Correo_m, @id = "Correo_m" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.Trabajo_m)</label>
+            <p>@Html.DisplayFor(model => model.Trabajo_m)</p>
+            @Html.HiddenFor(model => model.Trabajo_m, new { htmlAttributes = new { @Value = Model.Trabajo_m, @id = "Trabajo_m" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.DireccionM)</label>
+            <p>@Html.DisplayFor(model => model.DireccionM)</p>
+            @Html.HiddenFor(model => model.DireccionM, new { htmlAttributes = new { @Value = Model.DireccionM, @id = "Trabajo_m" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.Nom_papa)</label>
+            <p>@Html.DisplayFor(model => model.Nom_papa)</p>
+            @Html.HiddenFor(model => model.Nom_papa, new { htmlAttributes = new { @Value = Model.Nom_papa, @id = "Nom_papa" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.Correo_p)</label>
+            <p>@Html.DisplayFor(model => model.Correo_p)</p>
+            @Html.HiddenFor(model => model.Correo_p, new { htmlAttributes = new { @Value = Model.Correo_p, @id = "Correo_p" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.Trabajo_p)</label>
+            <p>@Html.DisplayFor(model => model.Trabajo_p)</p>
+            @Html.HiddenFor(model => model.Trabajo_p, new { htmlAttributes = new { @Value = Model.Trabajo_p, @id = "Trabajo_p" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.DireccionP)</label>
+            <p>@Html.DisplayFor(model => model.DireccionP)</p>
+            @Html.HiddenFor(model => model.DireccionP, new { htmlAttributes = new { @Value = Model.DireccionP, @id = "Trabajo_m" } })
+        </div>
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.Ciudad)</label>
+            <p>@Html.DisplayFor(model => model.Ciudad)</p>
+            @Html.HiddenFor(model => model.Ciudad, new { htmlAttributes = new { @Value = Model.Ciudad, @id = "Trabajo_p" } })
+        </div>
+
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.tel_p)</label>
+            <p>@Html.DisplayFor(model => model.tel_p)</p>
+            @Html.HiddenFor(model => model.tel_p, new { htmlAttributes = new { @Value = Model.tel_p, @id = "tel_p" } })
+        </div>
+
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.tel_m)</label>
+            <p>@Html.DisplayFor(model => model.tel_m)</p>
+            @Html.HiddenFor(model => model.tel_m, new { htmlAttributes = new { @Value = Model.tel_m, @id = "tel_m" } })
+        </div>
+
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.Correo)</label>
+            <p>@Html.DisplayFor(model => model.Correo)</p>
+            @Html.HiddenFor(model => model.Correo, new { htmlAttributes = new { @Value = Model.Correo, @id = "Correo" } })
+        </div>
+
+        <div class="col-md-12">
+            <label class="negrita">@Html.DisplayNameFor(model => model.GrupoDescripcion)</label>
+            <p>@Html.DisplayFor(model => model.GrupoDescripcion)</p>
+            @Html.HiddenFor(model => model.GrupoDescripcion, new { htmlAttributes = new { @Value = Model.GrupoDescripcion, @id = "GrupoDescripcion" } })
+        </div>
+    </div>
+</div>
+<p></p>
+@Html.ActionLink("Generar Solicitud de Inscripcion", "Imprimir", new { id = Model.id_Alumno}, new { @class = "btn btn-info btn-sm float-right" })
+@*<button class="btn btn-large btn-success" id="pdf" onclick="window.print()">Generar Solicitud de Inscripcion</button>*@
+@*<button class="btn btn-outline-success my-2 my-sm-0 float-right" type="submit" id="Excel">Generar excel</button>*@
+@*<p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.id_Alumno }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+         //Funcion para crear excel
+        $(document).ready(function () {
+              $('#Excel').on('click', function () {
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Action("ExporttoExcel", "Alumno")',
+                            dataType: 'Json',
+                            data: {
+                                Nombre: $('#Nombre').val(),
+                                ApellidoP: $('#ApellidoP').val(),
+                                ApellidoM: $('#ApellidoM').val(),
+                                FechaNac: $('#FechaNac').val(),
+                                Sexo: $('#Sexo').val(),
+                                TipoSangre: $('#TipoSangre').val(),
+                                Direccion: $('#Direccion').val(),
+                                Nom_mama: $('#Nom_mama').val(),
+                                Correo_m: $('#Correo_m').val(),
+                                Trabajo_m: $('#Trabajo_m').val(),
+                                Nom_papa: $('#Nom_papa').val(),
+                                Correo_p: $('#Correo_p').val(),
+                                Trabajo_p: $('#Trabajo_p').val(),
+                                Ciudad: $('#Ciudad').val(),
+                                Correo: $('#Correo').val(),
+                                GrupoDescripcion: $('#GrupoDescripcion').val(),
+                            },
+                            success: function (Reportevm) {
+                                if (Reportevm == "") {
+                                    ShowAlert("Ocurrio un error al crear excel.", "alert-danger");
+                                } else {
+                                    ShowAlert("Se creo excel en C:/temp.", "alert-success");
+                                }
+                                $.each(Reportevm, function (i, Reporte) {
+
+                                });
+
+                            },
+                            error: function (ex) {
+
+                            }
+                        });
+              });
+        });
+
+
+
+
+    </script>
+}

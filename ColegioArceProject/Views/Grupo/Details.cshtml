@@ -1,0 +1,18 @@
+﻿@model ColegioArceProject.ViewModels.GrupoViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_diseño.cshtml";
+}
+
+    <div class="card marginbot30 ">
+        <h2 class="card-header">Detalles del Grupo</h2>
+        <div class="card-body">
+            <div class="col-md-12">
+                <label class="negrita">@Html.DisplayNameFor(model => model.Descripcion)</label>
+                <p> @Html.DisplayFor(model => model.Descripcion)</p>
+                <label class="negrita"> @Html.DisplayNameFor(model => model.DescripcionEscolaridad)</label>
+                <p>@Html.DisplayFor(model => model.DescripcionEscolaridad)</p>
+            </div>
+        </div>
+    </div>

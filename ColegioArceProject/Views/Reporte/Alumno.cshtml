@@ -1,0 +1,215 @@
+﻿@model ColegioArceProject.ViewModels.ReporteAlumnoViewModel
+
+@{
+    ViewBag.Title = "Alumno";
+    Layout = "~/Views/Shared/_diseño.cshtml";
+}
+
+<div class="m-5">
+    <div class="row">
+        @Html.Action("_BuscarAlumno", "Reporte", "")
+    </div>
+</div>
+<div class="Nombre">
+
+</div>
+<div class="Escolaridad">
+
+</div>
+<div class="Grupo">
+
+</div>
+<p></p>
+<table class="text-center table table-hover" id="tablaPagos">
+    <thead id="theadid">
+        <tr>
+            <th>
+                @Html.Label("Fecha")
+            </th>
+            <th>
+                @Html.Label("Folio")
+            </th>
+            <th>
+                @Html.Label("Concepto de Pago")
+            </th>
+            <th>
+                @Html.Label("Importe")
+            </th>
+            <th></th>
+        </tr>
+    <thead />
+    @foreach (var item in Model.ListaPagos)
+    {
+        <tbody id="bodyid">
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(modelItem => item.Fecha)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(modelItem => item.Folio)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(modelItem => item.ConceptoPago)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(modelItem => item.Importe)
+                </td>
+            </tr>
+        </tbody>
+
+    }
+
+</table>
+<button class="btn btn-large btn-success" id="pdf" onclick="window.print()">Generar PDF</button>
+
+@*<button class="btn btn-outline-success my-2 my-sm-0 " type="submit" id="Excel">Excel</button>*@
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#pdf').hide();
+            $('div.spinner-grow').hide();
+            $('#tablaPagos').empty();
+            $('#Alumno').autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Reporte/GetAlumnos',
+                        datatype: 'json',
+                        data: {
+                            Areas: 'Sales',
+                            buscar: request.term
+                        },
+                        success: function (data) {
+                            $.each(data, function (index, value) {
+                                $('#id_Alumno').val(value.id);
+                            });
+                            response($.map(data, function (val) {
+                                return {
+                                    label: val.Alumno,
+                                    value: val.Alumno,
+                                    id_Alumno: val.id
+                                }
+                            }))
+                        }
+                    })
+                },
+
+                select: function (event, ui) {
+                    $("#Alumno").val(ui.item.id_Alumno);
+                    $("#id_Alumno").val(ui.item.id_Alumno);
+
+                }
+            });
+
+            //Funcion para mostrar reporte
+            $(function () {
+
+                $('#Buscar').on('click', function () {
+                    $('#pdf').hide();
+                    if ($('#Alumno').val() === '') {
+                        alert('Error. Busque un nombre de alumno');
+                    } else {
+                       $('div.spinner-grow').show();
+                       $('#bodyid').empty();
+                       $('#tablaPagos').empty();
+                       $('.Nombre').empty();
+                       $('.Escolaridad').empty();
+                       $('.Grupo').empty();
+                         $.ajax({
+                            type: 'POST',
+                            url: '@Url.Action("_BuscarAlumno","Reporte")',
+                            dataType: 'json',
+                            data: {
+                                Alumno: $('#Alumno').val(),
+                            },
+                           success: function (ReporteAlumno) {
+                                   $('div.spinner-grow').hide();
+                                   if (ReporteAlumno.Alumno == '') {
+                                       alert("No hay información para su busqueda.");
+                                   } else {
+
+                                       $('.Escolaridad').append('<div value="' + ReporteAlumno.Escolaridad + '">Escolaridad : ' + ReporteAlumno.Escolaridad+'</div>');
+                                       $('.Grupo').append('<div value="' + ReporteAlumno.Grupo + '">Grupo : ' + ReporteAlumno.Grupo + '</div>');
+                                       $('.Nombre').append('<input id="Nom" type="hidden" value="' + $('#Alumno').val() + '">Nombre Alumno : ' + ReporteAlumno.NombreCompleto + '</input>');
+                                       var th = $('<tr/>');
+                                       th.append('<th> Fecha de Pago </th><th> Folio </th><th> Concepto de Pago </th><th> Metodo de Pago </th><th> Importe </th>');
+                                       $('#tablaPagos').append(th);
+
+                                       $.each(ReporteAlumno.ListaPagos, function (i, Reporte) {
+                                           //var Botones = '<a href="Alumno/Edit/' + Alumno.id_Alumno + '" class="btn btn-sm btn-success">Editar</a> | <a href="Alumno/Details/' + Alumno.id_Alumno + '" class="btn btn-sm btn-primary">Detalles</a> | <a href="Alumno/Delete/' + Alumno.id_Alumno + '" class="btn btn-sm btn-danger">Eliminar</a> | <a href="Pago/GuardarPagoAlumno/' + Alumno.id_Alumno +'" class="btn btn-sm btn-secondary">Registrar Pago</a>';
+                                           var tr = $('<tr/>');
+                                           tr.append('<td>' + Reporte.Fecha + '</td>');
+                                           tr.append('<td>' + Reporte.Folio + '</td>');
+                                           tr.append('<td>' + Reporte.ConceptoPago + '</td>');
+                                           tr.append('<td>' + Reporte.TipoPago + '</td>');
+                                           tr.append('<td>' + Reporte.Importe + '</td>');
+                                           $('#tablaPagos').append(tr);
+                                           $('#pdf').show();
+                                       });
+                                   }
+                           },
+                           error: function (ex) {
+
+                                $('div.spinner-grow').hide();
+                               if ($('#Alumno').val() === '')
+                                    alert('Error. Busque un nombre de alumno (' + ex.message + ')');
+
+                           }
+                        });
+                    }
+                });
+            });
+
+            //Funcion para crear excel
+            $(function () {
+                $('#Excel').on('click', function () {
+                    if ($('#Nom').val() == '') {
+                        alert("alumno es nulo" + $('#Nom').val());
+                    } else {
+
+
+                     $.ajax({
+                            type: 'POST',
+                            url: '@Url.Action("ExportAlumno", "Reporte")',
+                            dataType: 'Json',
+                            data: {
+
+                                Alumno: $('#Nom').val()
+
+                            },
+                            success: function (Reportevm) {
+                                if (Reportevm == "") {
+                                    ShowAlert("Ocurrio un error al crear excel.", "alert-danger");
+                                } else {
+                                    ShowAlert("Se creo excel en C:/temp.", "alert-success");
+                                }
+                                $.each(Reportevm, function (i, Reporte) {
+
+                                });
+
+                            },
+                            error: function (ex) {
+                                if ($('#Alumno').val() === '')
+                                    alert('Error. Seleccione nombre de alumno. (' + ex.message + ')');
+
+                            }
+                        });
+                    }
+
+                });
+            });
+
+        //Funcion PDF
+            function myFunction() {
+                window.print();
+            }
+
+
+        });
+    </script>
+
+}

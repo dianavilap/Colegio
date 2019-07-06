@@ -1,0 +1,47 @@
+﻿@model ColegioArceProject.Models.Pago
+
+@{
+    ViewBag.Title = "Cancelar Pago";
+    Layout = "~/Views/Shared/_diseño.cshtml";
+}
+
+<p></p>
+<h3>Seguro que desea cancelar el pago?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+
+        <dd>
+            @Model.Fecha.ToShortDateString()
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GrupoAlumno.Alumno.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GrupoAlumno.Alumno.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Precio.Concepto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Precio.Concepto)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Cancelar Pago" class="btn btn-danger btn-sm" /> |
+        @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-info btn-sm" })
+    </div>
+    }
+</div>

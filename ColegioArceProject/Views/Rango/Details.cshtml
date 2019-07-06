@@ -1,0 +1,53 @@
+﻿@model ColegioArceProject.Models.Rango
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_diseño.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-10">
+
+
+        <div>
+            <h4>Rango</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Inicio)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Inicio)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Fin)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Fin)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Descripcion)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Descripcion)
+                </dd>
+
+            </dl>
+        </div>
+
+        <div class="form-group">
+            @Html.ActionLink("Edit", "Editar", new { id = Model.id_Rango }, new { @class = "btn btn-success btn-mini" }) |
+            @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-secondary btn-mini" })
+        </div>
+
+    </div>
+    <div class="col-md-1">
+    </div>
+</div>

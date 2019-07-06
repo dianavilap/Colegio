@@ -1,0 +1,771 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ColegioArceBD.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Alumno">
+          <Key>
+            <PropertyRef Name="id_Alumno" />
+          </Key>
+          <Property Name="id_Alumno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoP" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoM" Type="varchar" MaxLength="50" />
+          <Property Name="Direccion" Type="varchar(max)" />
+          <Property Name="Nom_mama" Type="varchar(max)" />
+          <Property Name="Nom_papa" Type="varchar(max)" />
+          <Property Name="Ciudad" Type="varchar" MaxLength="50" />
+          <Property Name="tel_p" Type="text" />
+          <Property Name="tel_m" Type="text" />
+          <Property Name="Correo" Type="varchar" MaxLength="50" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaNac" Type="datetime" Nullable="false" />
+          <Property Name="Sexo" Type="char" MaxLength="10" />
+          <Property Name="Trabajo_p" Type="varchar(max)" />
+          <Property Name="Trabajo_m" Type="varchar(max)" />
+          <Property Name="Correo_m" Type="varchar(max)" />
+          <Property Name="Correo_p" Type="varchar(max)" />
+          <Property Name="TipoSangre" Type="nchar" MaxLength="10" />
+          <Property Name="Alergias" Type="varchar(max)" />
+          <Property Name="Edad" Type="int" Nullable="false" />
+          <Property Name="Tel_Alumno" Type="varchar(max)" />
+          <Property Name="DireccionTP" Type="varchar(max)" />
+          <Property Name="DireccionTM" Type="varchar(max)" />
+          <Property Name="FechaInsc" Type="date" Nullable="false" />
+          <Property Name="EscuelaP" Type="varchar(max)" />
+          <Property Name="Peso" Type="varchar(max)" />
+          <Property Name="Estatura" Type="varchar(max)" />
+          <Property Name="Lesion" Type="varchar(max)" />
+          <Property Name="TratamientoMed" Type="varchar(max)" />
+          <Property Name="Enfermedad" Type="varchar(max)" />
+          <Property Name="Lentes" Type="varchar(max)" />
+          <Property Name="Auditivo" Type="varchar(max)" />
+          <Property Name="TrasladoAcc" Type="varchar(max)" />
+          <Property Name="TelEmergencia" Type="varchar(max)" />
+          <Property Name="ServicioMed" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Escolaridad">
+          <Key>
+            <PropertyRef Name="id_escolaridad" />
+          </Key>
+          <Property Name="id_escolaridad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar(max)" Nullable="false" />
+          <Property Name="No_Peridos" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Grupo">
+          <Key>
+            <PropertyRef Name="id_Grupo" />
+          </Key>
+          <Property Name="id_Grupo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar(max)" Nullable="false" />
+          <Property Name="id_Escolaridad" Type="int" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pago">
+          <Key>
+            <PropertyRef Name="id_pago" />
+          </Key>
+          <Property Name="id_pago" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="id_Precio" Type="int" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="Importe" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Abono" Type="bit" />
+          <Property Name="id_GrupoAlumno" Type="int" Nullable="false" />
+          <Property Name="TipoPago" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Folio" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Precio">
+          <Key>
+            <PropertyRef Name="id_Precio" />
+          </Key>
+          <Property Name="id_Precio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Concepto" Type="varchar(max)" Nullable="false" />
+          <Property Name="Importe" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="id_Rango" Type="int" Nullable="false" />
+          <Property Name="id_Escolaridad" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rango">
+          <Key>
+            <PropertyRef Name="id_Rango" />
+          </Key>
+          <Property Name="id_Rango" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Inicio" Type="int" Nullable="false" />
+          <Property Name="Fin" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="id_Rol" />
+          </Key>
+          <Property Name="id_Rol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="id_Usuario" />
+          </Key>
+          <Property Name="id_Usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Contra" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="id_Rol" Type="int" />
+        </EntityType>
+        <EntityType Name="Abono">
+          <Key>
+            <PropertyRef Name="id_Abono" />
+          </Key>
+          <Property Name="id_Abono" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Importe" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="id_Pago" Type="int" Nullable="false" />
+          <Property Name="Cancelado" Type="bit" Nullable="false" />
+          <Property Name="TipoPago" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Folio" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GrupoAlumno">
+          <Key>
+            <PropertyRef Name="id_GrupoAlumno" />
+          </Key>
+          <Property Name="id_GrupoAlumno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Grupo" Type="int" Nullable="false" />
+          <Property Name="id_Alumno" Type="int" Nullable="false" />
+          <Property Name="Anio" Type="int" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Abono_Pago">
+          <End Role="Pago" Type="Self.Pago" Multiplicity="1" />
+          <End Role="Abono" Type="Self.Abono" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pago">
+              <PropertyRef Name="id_pago" />
+            </Principal>
+            <Dependent Role="Abono">
+              <PropertyRef Name="id_Pago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Grupo_Escolaridad">
+          <End Role="Escolaridad" Type="Self.Escolaridad" Multiplicity="1" />
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Escolaridad">
+              <PropertyRef Name="id_escolaridad" />
+            </Principal>
+            <Dependent Role="Grupo">
+              <PropertyRef Name="id_Escolaridad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GrupoAlumno_Alumno">
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="1" />
+          <End Role="GrupoAlumno" Type="Self.GrupoAlumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="id_Alumno" />
+            </Principal>
+            <Dependent Role="GrupoAlumno">
+              <PropertyRef Name="id_Alumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GrupoAlumno_Grupo">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
+          <End Role="GrupoAlumno" Type="Self.GrupoAlumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="id_Grupo" />
+            </Principal>
+            <Dependent Role="GrupoAlumno">
+              <PropertyRef Name="id_Grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pago_GrupoAlumno">
+          <End Role="GrupoAlumno" Type="Self.GrupoAlumno" Multiplicity="1" />
+          <End Role="Pago" Type="Self.Pago" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GrupoAlumno">
+              <PropertyRef Name="id_GrupoAlumno" />
+            </Principal>
+            <Dependent Role="Pago">
+              <PropertyRef Name="id_GrupoAlumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pago_Precio">
+          <End Role="Precio" Type="Self.Precio" Multiplicity="1" />
+          <End Role="Pago" Type="Self.Pago" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Precio">
+              <PropertyRef Name="id_Precio" />
+            </Principal>
+            <Dependent Role="Pago">
+              <PropertyRef Name="id_Precio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Precio_Escolaridad">
+          <End Role="Escolaridad" Type="Self.Escolaridad" Multiplicity="1" />
+          <End Role="Precio" Type="Self.Precio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Escolaridad">
+              <PropertyRef Name="id_escolaridad" />
+            </Principal>
+            <Dependent Role="Precio">
+              <PropertyRef Name="id_Escolaridad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Precio_Rango">
+          <End Role="Rango" Type="Self.Rango" Multiplicity="1" />
+          <End Role="Precio" Type="Self.Precio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rango">
+              <PropertyRef Name="id_Rango" />
+            </Principal>
+            <Dependent Role="Precio">
+              <PropertyRef Name="id_Rango" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="id_Rol" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="id_Rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ColegioArceBDStoreContainer">
+          <EntitySet Name="Alumno" EntityType="Self.Alumno" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Escolaridad" EntityType="Self.Escolaridad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grupo" EntityType="Self.Grupo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pago" EntityType="Self.Pago" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Precio" EntityType="Self.Precio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rango" EntityType="Self.Rango" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Abono" EntityType="Self.Abono" Schema="diana" store:Type="Tables" />
+          <EntitySet Name="GrupoAlumno" EntityType="Self.GrupoAlumno" Schema="diana" store:Type="Tables" />
+          <AssociationSet Name="FK_Abono_Pago" Association="Self.FK_Abono_Pago">
+            <End Role="Pago" EntitySet="Pago" />
+            <End Role="Abono" EntitySet="Abono" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grupo_Escolaridad" Association="Self.FK_Grupo_Escolaridad">
+            <End Role="Escolaridad" EntitySet="Escolaridad" />
+            <End Role="Grupo" EntitySet="Grupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GrupoAlumno_Alumno" Association="Self.FK_GrupoAlumno_Alumno">
+            <End Role="Alumno" EntitySet="Alumno" />
+            <End Role="GrupoAlumno" EntitySet="GrupoAlumno" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GrupoAlumno_Grupo" Association="Self.FK_GrupoAlumno_Grupo">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="GrupoAlumno" EntitySet="GrupoAlumno" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pago_GrupoAlumno" Association="Self.FK_Pago_GrupoAlumno">
+            <End Role="GrupoAlumno" EntitySet="GrupoAlumno" />
+            <End Role="Pago" EntitySet="Pago" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pago_Precio" Association="Self.FK_Pago_Precio">
+            <End Role="Precio" EntitySet="Precio" />
+            <End Role="Pago" EntitySet="Pago" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Precio_Escolaridad" Association="Self.FK_Precio_Escolaridad">
+            <End Role="Escolaridad" EntitySet="Escolaridad" />
+            <End Role="Precio" EntitySet="Precio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Precio_Rango" Association="Self.FK_Precio_Rango">
+            <End Role="Rango" EntitySet="Rango" />
+            <End Role="Precio" EntitySet="Precio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ColegioArceBD" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Alumno">
+          <Key>
+            <PropertyRef Name="id_Alumno" />
+          </Key>
+          <Property Name="id_Alumno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Nom_mama" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Nom_papa" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Ciudad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tel_p" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="tel_m" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaNac" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="Sexo" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Trabajo_p" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Trabajo_m" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Correo_m" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Correo_p" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TipoSangre" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="GrupoAlumno" Relationship="Self.FK_GrupoAlumno_Alumno" FromRole="Alumno" ToRole="GrupoAlumno" />
+          <Property Name="Alergias" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Edad" Type="Int32" Nullable="false" />
+          <Property Name="Tel_Alumno" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DireccionTP" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DireccionTM" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FechaInsc" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="EscuelaP" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Peso" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Estatura" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Lesion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TratamientoMed" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Enfermedad" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Lentes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Auditivo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TrasladoAcc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TelEmergencia" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ServicioMed" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Escolaridad">
+          <Key>
+            <PropertyRef Name="id_escolaridad" />
+          </Key>
+          <Property Name="id_escolaridad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="No_Peridos" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK_Grupo_Escolaridad" FromRole="Escolaridad" ToRole="Grupo" />
+          <NavigationProperty Name="Precio" Relationship="Self.FK_Precio_Escolaridad" FromRole="Escolaridad" ToRole="Precio" />
+        </EntityType>
+        <EntityType Name="Grupo">
+          <Key>
+            <PropertyRef Name="id_Grupo" />
+          </Key>
+          <Property Name="id_Grupo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_Escolaridad" Type="Int32" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Escolaridad" Relationship="Self.FK_Grupo_Escolaridad" FromRole="Grupo" ToRole="Escolaridad" />
+          <NavigationProperty Name="GrupoAlumno" Relationship="Self.FK_GrupoAlumno_Grupo" FromRole="Grupo" ToRole="GrupoAlumno" />
+        </EntityType>
+        <EntityType Name="Pago">
+          <Key>
+            <PropertyRef Name="id_pago" />
+          </Key>
+          <Property Name="id_pago" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="id_Precio" Type="Int32" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="Importe" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Abono" Type="Boolean" />
+          <Property Name="id_GrupoAlumno" Type="Int32" Nullable="false" />
+          <Property Name="TipoPago" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Abono1" Relationship="Self.FK_Abono_Pago" FromRole="Pago" ToRole="Abono" />
+          <NavigationProperty Name="GrupoAlumno" Relationship="Self.FK_Pago_GrupoAlumno" FromRole="Pago" ToRole="GrupoAlumno" />
+          <NavigationProperty Name="Precio" Relationship="Self.FK_Pago_Precio" FromRole="Pago" ToRole="Precio" />
+          <Property Name="Folio" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Precio">
+          <Key>
+            <PropertyRef Name="id_Precio" />
+          </Key>
+          <Property Name="id_Precio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Concepto" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Importe" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="id_Rango" Type="Int32" Nullable="false" />
+          <Property Name="id_Escolaridad" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Escolaridad" Relationship="Self.FK_Precio_Escolaridad" FromRole="Precio" ToRole="Escolaridad" />
+          <NavigationProperty Name="Pago" Relationship="Self.FK_Pago_Precio" FromRole="Precio" ToRole="Pago" />
+          <NavigationProperty Name="Rango" Relationship="Self.FK_Precio_Rango" FromRole="Precio" ToRole="Rango" />
+        </EntityType>
+        <EntityType Name="Rango">
+          <Key>
+            <PropertyRef Name="id_Rango" />
+          </Key>
+          <Property Name="id_Rango" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Inicio" Type="Int32" Nullable="false" />
+          <Property Name="Fin" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Precio" Relationship="Self.FK_Precio_Rango" FromRole="Rango" ToRole="Precio" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="id_Rol" />
+          </Key>
+          <Property Name="id_Rol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Rol" FromRole="Rol" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="id_Usuario" />
+          </Key>
+          <Property Name="id_Usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Contra" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_Rol" Type="Int32" />
+          <NavigationProperty Name="Rol" Relationship="Self.FK_Usuario_Rol" FromRole="Usuario" ToRole="Rol" />
+        </EntityType>
+        <EntityType Name="Abono">
+          <Key>
+            <PropertyRef Name="id_Abono" />
+          </Key>
+          <Property Name="id_Abono" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Importe" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="id_Pago" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pago" Relationship="Self.FK_Abono_Pago" FromRole="Abono" ToRole="Pago" />
+          <Property Name="Cancelado" Type="Boolean" Nullable="false" />
+          <Property Name="TipoPago" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Folio" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GrupoAlumno">
+          <Key>
+            <PropertyRef Name="id_GrupoAlumno" />
+          </Key>
+          <Property Name="id_GrupoAlumno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Grupo" Type="Int32" Nullable="false" />
+          <Property Name="id_Alumno" Type="Int32" Nullable="false" />
+          <Property Name="Anio" Type="Int32" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Alumno" Relationship="Self.FK_GrupoAlumno_Alumno" FromRole="GrupoAlumno" ToRole="Alumno" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK_GrupoAlumno_Grupo" FromRole="GrupoAlumno" ToRole="Grupo" />
+          <NavigationProperty Name="Pago" Relationship="Self.FK_Pago_GrupoAlumno" FromRole="GrupoAlumno" ToRole="Pago" />
+        </EntityType>
+        <Association Name="FK_GrupoAlumno_Alumno">
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="1" />
+          <End Role="GrupoAlumno" Type="Self.GrupoAlumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="id_Alumno" />
+            </Principal>
+            <Dependent Role="GrupoAlumno">
+              <PropertyRef Name="id_Alumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Grupo_Escolaridad">
+          <End Role="Escolaridad" Type="Self.Escolaridad" Multiplicity="1" />
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Escolaridad">
+              <PropertyRef Name="id_escolaridad" />
+            </Principal>
+            <Dependent Role="Grupo">
+              <PropertyRef Name="id_Escolaridad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Precio_Escolaridad">
+          <End Role="Escolaridad" Type="Self.Escolaridad" Multiplicity="1" />
+          <End Role="Precio" Type="Self.Precio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Escolaridad">
+              <PropertyRef Name="id_escolaridad" />
+            </Principal>
+            <Dependent Role="Precio">
+              <PropertyRef Name="id_Escolaridad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GrupoAlumno_Grupo">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
+          <End Role="GrupoAlumno" Type="Self.GrupoAlumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="id_Grupo" />
+            </Principal>
+            <Dependent Role="GrupoAlumno">
+              <PropertyRef Name="id_Grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Abono_Pago">
+          <End Role="Pago" Type="Self.Pago" Multiplicity="1" />
+          <End Role="Abono" Type="Self.Abono" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pago">
+              <PropertyRef Name="id_pago" />
+            </Principal>
+            <Dependent Role="Abono">
+              <PropertyRef Name="id_Pago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pago_GrupoAlumno">
+          <End Role="GrupoAlumno" Type="Self.GrupoAlumno" Multiplicity="1" />
+          <End Role="Pago" Type="Self.Pago" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GrupoAlumno">
+              <PropertyRef Name="id_GrupoAlumno" />
+            </Principal>
+            <Dependent Role="Pago">
+              <PropertyRef Name="id_GrupoAlumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pago_Precio">
+          <End Role="Precio" Type="Self.Precio" Multiplicity="1" />
+          <End Role="Pago" Type="Self.Pago" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Precio">
+              <PropertyRef Name="id_Precio" />
+            </Principal>
+            <Dependent Role="Pago">
+              <PropertyRef Name="id_Precio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Precio_Rango">
+          <End Role="Rango" Type="Self.Rango" Multiplicity="1" />
+          <End Role="Precio" Type="Self.Precio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rango">
+              <PropertyRef Name="id_Rango" />
+            </Principal>
+            <Dependent Role="Precio">
+              <PropertyRef Name="id_Rango" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="id_Rol" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="id_Rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ColegioArce_Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Alumno" EntityType="Self.Alumno" />
+          <EntitySet Name="Escolaridad" EntityType="Self.Escolaridad" />
+          <EntitySet Name="Grupo" EntityType="Self.Grupo" />
+          <EntitySet Name="Pago" EntityType="Self.Pago" />
+          <EntitySet Name="Precio" EntityType="Self.Precio" />
+          <EntitySet Name="Rango" EntityType="Self.Rango" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <EntitySet Name="Abono" EntityType="Self.Abono" />
+          <EntitySet Name="GrupoAlumno" EntityType="Self.GrupoAlumno" />
+          <AssociationSet Name="FK_GrupoAlumno_Alumno" Association="Self.FK_GrupoAlumno_Alumno">
+            <End Role="Alumno" EntitySet="Alumno" />
+            <End Role="GrupoAlumno" EntitySet="GrupoAlumno" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grupo_Escolaridad" Association="Self.FK_Grupo_Escolaridad">
+            <End Role="Escolaridad" EntitySet="Escolaridad" />
+            <End Role="Grupo" EntitySet="Grupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Precio_Escolaridad" Association="Self.FK_Precio_Escolaridad">
+            <End Role="Escolaridad" EntitySet="Escolaridad" />
+            <End Role="Precio" EntitySet="Precio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GrupoAlumno_Grupo" Association="Self.FK_GrupoAlumno_Grupo">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="GrupoAlumno" EntitySet="GrupoAlumno" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Abono_Pago" Association="Self.FK_Abono_Pago">
+            <End Role="Pago" EntitySet="Pago" />
+            <End Role="Abono" EntitySet="Abono" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pago_GrupoAlumno" Association="Self.FK_Pago_GrupoAlumno">
+            <End Role="GrupoAlumno" EntitySet="GrupoAlumno" />
+            <End Role="Pago" EntitySet="Pago" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pago_Precio" Association="Self.FK_Pago_Precio">
+            <End Role="Precio" EntitySet="Precio" />
+            <End Role="Pago" EntitySet="Pago" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Precio_Rango" Association="Self.FK_Precio_Rango">
+            <End Role="Rango" EntitySet="Rango" />
+            <End Role="Precio" EntitySet="Precio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ColegioArceBDStoreContainer" CdmEntityContainer="ColegioArce_Entities1">
+          <EntitySetMapping Name="Alumno">
+            <EntityTypeMapping TypeName="ColegioArceBD.Alumno">
+              <MappingFragment StoreEntitySet="Alumno">
+                <ScalarProperty Name="ServicioMed" ColumnName="ServicioMed" />
+                <ScalarProperty Name="TelEmergencia" ColumnName="TelEmergencia" />
+                <ScalarProperty Name="TrasladoAcc" ColumnName="TrasladoAcc" />
+                <ScalarProperty Name="Auditivo" ColumnName="Auditivo" />
+                <ScalarProperty Name="Lentes" ColumnName="Lentes" />
+                <ScalarProperty Name="Enfermedad" ColumnName="Enfermedad" />
+                <ScalarProperty Name="TratamientoMed" ColumnName="TratamientoMed" />
+                <ScalarProperty Name="Lesion" ColumnName="Lesion" />
+                <ScalarProperty Name="Estatura" ColumnName="Estatura" />
+                <ScalarProperty Name="Peso" ColumnName="Peso" />
+                <ScalarProperty Name="EscuelaP" ColumnName="EscuelaP" />
+                <ScalarProperty Name="FechaInsc" ColumnName="FechaInsc" />
+                <ScalarProperty Name="DireccionTM" ColumnName="DireccionTM" />
+                <ScalarProperty Name="DireccionTP" ColumnName="DireccionTP" />
+                <ScalarProperty Name="Tel_Alumno" ColumnName="Tel_Alumno" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+                <ScalarProperty Name="Alergias" ColumnName="Alergias" />
+                <ScalarProperty Name="id_Alumno" ColumnName="id_Alumno" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ApellidoP" ColumnName="ApellidoP" />
+                <ScalarProperty Name="ApellidoM" ColumnName="ApellidoM" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Nom_mama" ColumnName="Nom_mama" />
+                <ScalarProperty Name="Nom_papa" ColumnName="Nom_papa" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="tel_p" ColumnName="tel_p" />
+                <ScalarProperty Name="tel_m" ColumnName="tel_m" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="FechaNac" ColumnName="FechaNac" />
+                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+                <ScalarProperty Name="Trabajo_p" ColumnName="Trabajo_p" />
+                <ScalarProperty Name="Trabajo_m" ColumnName="Trabajo_m" />
+                <ScalarProperty Name="Correo_m" ColumnName="Correo_m" />
+                <ScalarProperty Name="Correo_p" ColumnName="Correo_p" />
+                <ScalarProperty Name="TipoSangre" ColumnName="TipoSangre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Escolaridad">
+            <EntityTypeMapping TypeName="ColegioArceBD.Escolaridad">
+              <MappingFragment StoreEntitySet="Escolaridad">
+                <ScalarProperty Name="id_escolaridad" ColumnName="id_escolaridad" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="No_Peridos" ColumnName="No_Peridos" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grupo">
+            <EntityTypeMapping TypeName="ColegioArceBD.Grupo">
+              <MappingFragment StoreEntitySet="Grupo">
+                <ScalarProperty Name="id_Grupo" ColumnName="id_Grupo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="id_Escolaridad" ColumnName="id_Escolaridad" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pago">
+            <EntityTypeMapping TypeName="ColegioArceBD.Pago">
+              <MappingFragment StoreEntitySet="Pago">
+                <ScalarProperty Name="Folio" ColumnName="Folio" />
+                <ScalarProperty Name="id_pago" ColumnName="id_pago" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="id_Precio" ColumnName="id_Precio" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Importe" ColumnName="Importe" />
+                <ScalarProperty Name="Abono" ColumnName="Abono" />
+                <ScalarProperty Name="id_GrupoAlumno" ColumnName="id_GrupoAlumno" />
+                <ScalarProperty Name="TipoPago" ColumnName="TipoPago" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Precio">
+            <EntityTypeMapping TypeName="ColegioArceBD.Precio">
+              <MappingFragment StoreEntitySet="Precio">
+                <ScalarProperty Name="id_Precio" ColumnName="id_Precio" />
+                <ScalarProperty Name="Concepto" ColumnName="Concepto" />
+                <ScalarProperty Name="Importe" ColumnName="Importe" />
+                <ScalarProperty Name="id_Rango" ColumnName="id_Rango" />
+                <ScalarProperty Name="id_Escolaridad" ColumnName="id_Escolaridad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rango">
+            <EntityTypeMapping TypeName="ColegioArceBD.Rango">
+              <MappingFragment StoreEntitySet="Rango">
+                <ScalarProperty Name="id_Rango" ColumnName="id_Rango" />
+                <ScalarProperty Name="Inicio" ColumnName="Inicio" />
+                <ScalarProperty Name="Fin" ColumnName="Fin" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rol">
+            <EntityTypeMapping TypeName="ColegioArceBD.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="id_Rol" ColumnName="id_Rol" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="ColegioArceBD.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="id_Usuario" ColumnName="id_Usuario" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Contra" ColumnName="Contra" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="id_Rol" ColumnName="id_Rol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Abono">
+            <EntityTypeMapping TypeName="ColegioArceBD.Abono">
+              <MappingFragment StoreEntitySet="Abono">
+                <ScalarProperty Name="Folio" ColumnName="Folio" />
+                <ScalarProperty Name="TipoPago" ColumnName="TipoPago" />
+                <ScalarProperty Name="Cancelado" ColumnName="Cancelado" />
+                <ScalarProperty Name="id_Abono" ColumnName="id_Abono" />
+                <ScalarProperty Name="Importe" ColumnName="Importe" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="id_Pago" ColumnName="id_Pago" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GrupoAlumno">
+            <EntityTypeMapping TypeName="ColegioArceBD.GrupoAlumno">
+              <MappingFragment StoreEntitySet="GrupoAlumno">
+                <ScalarProperty Name="id_GrupoAlumno" ColumnName="id_GrupoAlumno" />
+                <ScalarProperty Name="id_Grupo" ColumnName="id_Grupo" />
+                <ScalarProperty Name="id_Alumno" ColumnName="id_Alumno" />
+                <ScalarProperty Name="Anio" ColumnName="Anio" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

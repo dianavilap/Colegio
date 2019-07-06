@@ -1,0 +1,52 @@
+﻿@model IEnumerable<ColegioArceProject.Models.Precio>
+
+@{
+    ViewBag.Title = "Precios";
+    Layout = "~/Views/Shared/_diseño.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Concepto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Importe)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.id_Escolaridad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rango.Descripcion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Concepto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Importe)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.id_Escolaridad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rango.Descripcion)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id_Precio }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id_Precio }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id_Precio })
+        </td>
+    </tr>
+}
+
+</table>

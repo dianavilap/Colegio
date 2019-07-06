@@ -1,0 +1,84 @@
+﻿@model IEnumerable<ColegioArceProject.ViewModels.PagoViewModel>
+
+@{
+    ViewBag.Title = "Pagos";
+    Layout = "~/Views/Shared/_diseño.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-md-12">
+        <h2>Pagos de colegiatura</h2>
+        @*<p>
+                @Html.ActionLink("Nuevo pago", "Create", new { }, new { @class = "btn btn-success btn-mini" })
+            </p>*@
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.Label("Folio")
+                </th>
+                <th>
+                    @Html.Label("Fecha de pago")
+                </th>
+                <th>
+                    @Html.Label("Alumno")
+                </th>
+                @*<th>
+            @Html.Label("Escolaridad")
+        </th>*@
+                <th>
+                    @Html.Label("Descripción de pago")
+                </th>
+
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.folio)
+            </td>
+            <td>
+                @item.Fecha
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Alumno)
+            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.DescripcionEscolaridad)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.DescripcionPrecio)
+                @if (item.Abonos.Count > 0)
+                {
+                    int contador = 1;
+                    foreach (var abono in item.Abonos.Where(x => x.Cancelado == false))
+                    {
+                        <br />
+                        @("Abono " + contador + ": " + abono.Importe.ToString("C"))
+
+                        contador++;
+                    }
+                }
+            </td>
+            <td>
+                @*@Html.ActionLink("Editar", "Edit", new { id = item.id_pago }, new { @class = "btn btn-success btn-sm" }) |
+            @Html.ActionLink("Detalles", "Details", new { id = item.id_pago }, new { @class = "btn btn-primary btn-sm" }) |*@
+                @Html.ActionLink("Ver pago", "Details", new { id = item.id_pago }, new { @class = "btn btn-success btn-sm" })
+                @Html.ActionLink("Imprimir Pago", "imprimir", new { id = item.id_pago }, new { @class = "btn btn-info btn-sm" })
+                @if (String.Equals(ViewBag.Rol, "Admin", StringComparison.OrdinalIgnoreCase))
+                {
+                    @Html.ActionLink("Cancelar", "Delete", new { id = item.id_pago }, new { @class = "btn btn-danger btn-sm" })
+                }
+            </td>
+        </tr>
+            }
+
+        </table>
+
+
+    </div>
+
+</div>
+

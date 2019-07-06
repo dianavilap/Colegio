@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ColegioArceProject.Models.Alumno>
+
+@{
+    ViewBag.Title = "BuscarAlumno";
+    Layout = "~/Views/Shared/_diseño.cshtml";
+}
+
+<h2>BuscarAlumno</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm("BuscarAlumno", "Pago", FormMethod.Get))
+{
+    <div class=" form-group">
+
+        <div class="col-sm-10">
+            <input class="form-control" type="text" name="Name" id="Name" placeholder="Buscar por nombre ..." />
+
+        </div>
+        <div class="col-sm-2">
+            <input class="btn btn-primary" type="submit" value="Buscar" />
+        </div>
+    </div>
+}
+<div class=" form-group">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Grupo.Descripcion)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayTextFor(Modelitem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Grupo.Descripcion)
+                </td>
+                <td>
+                    @*@using (Html.BeginForm("BuscarAlumno", "Pago", FormMethod.Post, new { id = item.id_Alumno }))
+         {
+             @Html.AntiForgeryToken();
+             @Html.ValidationSummary();
+             @*<input type="submit" value="Pagar" />
+        }*@
+                    @Html.ActionLink("Pagar", "Create", new { id = item.id_Alumno }, new { @class = "btn btn-primary btn-mini" })
+                  
+
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>		

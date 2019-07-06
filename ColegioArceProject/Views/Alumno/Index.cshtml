@@ -1,0 +1,175 @@
+﻿@using PagedList;
+@model PagedList.IPagedList<ColegioArceProject.ViewModels.CreateAlumnoViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_diseño.cshtml";
+}
+
+<div class="container">
+    @Html.Action("BuscarAlumno", "Alumno")
+    <div class="row">
+        <div class="col-md-12 shadow-lg p-3 mb-5 bg-white rounded">
+            @*<h2>Alumnos</h2>*@
+
+            @*<p>
+                    @Html.ActionLink("Nuevo alumno", "Create", new { }, new { @class = "btn btn-light btn-mini" })
+                </p>*@
+
+            <table class="text-center table table-hover" id="tablaAlumnos">
+                <thead>
+                    <tr>
+                        <th>
+
+                            @Html.Label("Nombre Completo")
+                        </th>
+                        @*<th>
+                                @Html.Label("Apellido Paterno")
+                            </th>
+                            <th>
+                                @Html.Label("Apellido Materno")
+                            </th>*@
+                        <th>
+                            @*@Html.ActionLink("Grupo", "Index", new { sortOrder = ViewBag.DateSortParm })*@
+                            @Html.Label("Grupo")
+                        </th>
+                        <th></th>
+                    </tr>
+                <thead />
+                @foreach (var item in Model)
+                {
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NombreCompleto)
+                            </td>
+                            @*<td>
+                                    @Html.DisplayFor(modelItem => item.ApellidoP)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ApellidoM)
+                                </td>*@
+                            <td>
+                                    @Html.DisplayFor(modelItem => item.GrupoDescripcion)
+                                </td>
+                            <td class="text-center">
+                                @Html.ActionLink("Editar", "Edit", new { id = item.id_Alumno }, new { @class = "btn btn-sm btn-success " }) |
+                                @Html.ActionLink("Detalles", "Details", new { id = item.id_Alumno }, new { @class = "btn btn-sm btn-primary " }) |
+                                @Html.ActionLink("Dar de Baja", "Delete", new { id = item.id_Alumno }, new { @class = "btn btn-sm btn-danger" }) @*|
+                                    @Html.ActionLink("Realizar Pago", "GuardarPagoAlumno", "Pago", new { id = item.id_Alumno }, new { @class = "btn btn-sm btn-secondary" })*@
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+
+            </table>
+            @*<div class="col-sm-12 text-center">
+                    <input type="hidden" id="items" value="@Request["items"]" />
+                    <div class="pagination pagination-right pull-right">
+                        @Html.PagedListPager(Model,
+                                page => Url.Action("Index", new RouteValueDictionary() {
+                                    {"name", Request["name"]},
+                                    { "pageNumber", page},
+                                    { "items", Request["items"]}
+                                }), new PagedListRenderOptions { LinkToNextPageFormat = "Siguiente →", LinkToPreviousPageFormat = "← Anterior" })
+
+                    </div>end pagination
+                </div>*@
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+        //Filtrar con buscador del menú
+        $(function () {
+            $('#buscador').hide();
+            $('#buscador').on('change', function () {
+                $('#buscador').keyup(function () {
+                    if ($(this).val() != '') {
+                        $('#tablaAlumnos tbody>tr').hide();
+                        $('#tablaAlumnos td:contiene-palabra("' + $(this).val() + '")').parent('tr').show();
+                    }
+                    else {
+                        $('#tablaAlumnos tbody>tr').show();
+                    }
+                });
+
+                $.extend($.expr[':'],
+                    {
+                        'contiene-palabra': function (elem, i, match, array) {
+                            return (elem.textContent || elem.innerText || $(elem).text() || '').toLowerCase().indexOf((match[3] || '').toLowerCase()) >= 0;
+                        }
+                    });
+            });
+        });
+        // FunctionBuscarAlumno
+        $(function () {
+            $('#Buscar').on('click', function () {
+                $('#tablaAlumnos tbody>tr').hide();
+                var grupo = $('#id_Grupo');
+                var esco = $('#id_escolaridad');
+                if (esco.val() === '')
+                    alert('Error. Seleccione escolaridad y grupo para buscar');
+                if (grupo.val() === '0')
+                    alert('Error. Seleccione grupo para buscar');
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("BuscarAlumno", "Alumno")',
+                    dataType: "json",
+                    data: {
+                        id_Grupo: $('#id_Grupo').val(),
+                        id_escolaridad: $('#id_escolaridad').val(),
+                        Nombre: $('#Nombre').val(),
+                        ApellidoP: $('#ApellidoP').val(),
+                        ApellidoM: $('#ApellidoM').val()
+                    },
+                    success: function (Alumnovm) {
+                        //$('#tablaAlumnos thead>tr').append('<th>Nombre Completo</th><th>Nombre Completo</th>');
+                        if (Alumnovm == '') {
+                            alert('No hay resultados para su busqueda');
+                        } else {
+                            $.each(Alumnovm, function (i, Alumno) {
+                                var tr = $('<tr/>');
+                                var Botones = '<a href="Alumno/Edit/' + Alumno.id_Alumno + '" class="btn btn-sm btn-success">Editar</a> | <a href="Alumno/Details/' + Alumno.id_Alumno + '" class="btn btn-sm btn-primary">Detalles</a> | <a href="Alumno/Delete/' + Alumno.id_Alumno + '" class="btn btn-sm btn-danger">Eliminar</a>';
+                                tr.append('<td>' + Alumno.NombreCompleto + '</td>');
+                                tr.append('<td>' + Alumno.GrupoDescripcion + '</td>');
+                                tr.append('<td>' + Botones + '</td>');
+                                $('#tablaAlumnos').append(tr);
+                            });
+                        }
+                    },
+                    error: function (ex) {
+                        if ($('#id_Grupo') == '')
+                           alert('Error. no ha seleccionado grupo' + ex.message);
+                    }
+                });
+                });
+                });
+
+        // Function llenar grupos
+        $(function () {
+            $("#id_escolaridad").change(function () {
+                $("#id_Grupo").empty();
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GrupoList", "Alumno")',
+                dataType: "json",
+                    data: { id: $("#id_escolaridad").val() },
+                    success: function (ListaGrupo) {
+                        $.each(ListaGrupo, function (i, grupo) {
+                            $("#id_Grupo").append('<option value="' + grupo.Value + '">' + grupo.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Error.' + ex.message);
+                }
+            });
+            return false;
+            });
+            });
+        });
+
+
+    </script>
+}

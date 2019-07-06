@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ColegioArceProject.ViewModels.GrupoViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_diseño.cshtml";
+}
+
+
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+<div class="row">
+    <div class="col-md-12 shadow-lg p-3 mb-5 bg-white rounded">
+        <table class="text-center table table-hover">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descripcion)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.DescripcionEscolaridad)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DescripcionEscolaridad)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.id_grupo }, new { @class = "btn btn-sm btn-success " }) |
+                        @Html.ActionLink("Detalles", "Details", new { id = item.id_grupo }, new { @class = "btn btn-sm btn-primary " }) |
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.id_grupo }, new { @class = "btn btn-sm btn-danger" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+</div>
