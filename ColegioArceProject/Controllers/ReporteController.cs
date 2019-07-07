@@ -84,7 +84,7 @@ namespace ColegioArceProject.Controllers
                             Fecha = Pagodb.Fecha.ToString("dd/MM/yyyy"),
                             Folio = Pagodb.id_pago.ToString().Length >= 2 ? "000" + Pagodb.id_pago : "0000" + Pagodb.id_pago,
                             //DescripcionEscolaridad = pago.Alumno.Grupo.Escolaridad.Descripcion,
-                            ConceptoPago = abono.Cancelado == true ? "Folio CANCELADO " + Pagodb.Precio.Concepto : "Abono de " + Pagodb.Precio.Concepto,
+                            ConceptoPago = abono.Cancelado == true ? "Folio CANCELADO " + Pagodb.DescripcionPago : "Abono de " + Pagodb.DescripcionPago,
                             TipoPago = abono.TipoPago,
                             Importe = abono.Importe
                         });
@@ -96,9 +96,9 @@ namespace ColegioArceProject.Controllers
                     {
                         Fecha = Pagodb.Fecha.ToString("dd/MM/yyyy"),
                         Folio = Pagodb.id_pago.ToString().Length >= 2 ? "000" + Pagodb.id_pago : "0000" + Pagodb.id_pago,
-                        ConceptoPago = Pagodb.Activo == true ? Pagodb.Precio.Concepto : "Folio CANCELADO " + Pagodb.Precio.Concepto,
+                        ConceptoPago = Pagodb.Activo == true ? Pagodb.DescripcionPago : "Folio CANCELADO " + Pagodb.DescripcionPago,
                         TipoPago = Pagodb.TipoPago,
-                        Importe = Pagodb.Precio.Importe
+                        Importe = Pagodb.Importe
                     });
                 }
             }
@@ -220,7 +220,7 @@ namespace ColegioArceProject.Controllers
                             Folio = abono.Folio.ToString(),
                             NombreCompleto = Pagodb.GrupoAlumno.Alumno.ApellidoP + " " + Pagodb.GrupoAlumno.Alumno.ApellidoM + " " + Pagodb.GrupoAlumno.Alumno.Nombre,
                             //DescripcionEscolaridad = pago.Alumno.Grupo.Escolaridad.Descripcion,
-                            ConceptoPago = abono.Cancelado == true ? "Folio CANCELADO " + Pagodb.Precio.Concepto : "Abono de " + Pagodb.Precio.Concepto,
+                            ConceptoPago = abono.Cancelado == true ? "Folio CANCELADO " + Pagodb.DescripcionPago : "Abono de " + Pagodb.DescripcionPago,
                             TipoPago = Pagodb.TipoPago,
                             Importe = abono.Importe
                         });
@@ -233,9 +233,9 @@ namespace ColegioArceProject.Controllers
                         Fecha = Pagodb.Fecha.ToString("dd/MM/yyyy"),
                         Folio = Pagodb.Folio.ToString(),
                         NombreCompleto = Pagodb.GrupoAlumno.Alumno.ApellidoP + " " + Pagodb.GrupoAlumno.Alumno.ApellidoM + " " + Pagodb.GrupoAlumno.Alumno.Nombre,
-                        ConceptoPago = Pagodb.Activo == true ? Pagodb.Precio.Concepto : "Folio CANCELADO " + Pagodb.Precio.Concepto,
+                        ConceptoPago = Pagodb.Activo == true ? Pagodb.DescripcionPago : "Folio CANCELADO " + Pagodb.DescripcionPago,
                         TipoPago = Pagodb.TipoPago,
-                        Importe = Pagodb.Precio.Importe
+                        Importe = Pagodb.Importe
                     });
                 }
             }
@@ -342,7 +342,7 @@ namespace ColegioArceProject.Controllers
                                 Folio = Pagodb.id_pago.ToString().Length >= 2 ? "000" + Pagodb.id_pago : "0000" + Pagodb.id_pago,
                                 NombreCompleto = Pagodb.GrupoAlumno.Alumno.ApellidoP + " " + Pagodb.GrupoAlumno.Alumno.ApellidoM + " " + Pagodb.GrupoAlumno.Alumno.Nombre,
                                 //DescripcionEscolaridad = pago.Alumno.Grupo.Escolaridad.Descripcion,
-                                ConceptoPago = "Abono de " + Pagodb.Precio.Concepto,
+                                ConceptoPago = "Abono de " + Pagodb.DescripcionPago,
                                 TipoPago = Pagodb.TipoPago,
                                 Importe = abono.Importe
                             });
@@ -353,9 +353,9 @@ namespace ColegioArceProject.Controllers
                         Fecha = Pagodb.Fecha.ToShortDateString(),
                         Folio = Pagodb.id_pago.ToString().Length >= 2 ? "000" + Pagodb.id_pago : "0000" + Pagodb.id_pago,
                         NombreCompleto = Pagodb.GrupoAlumno.Alumno.ApellidoP + " " + Pagodb.GrupoAlumno.Alumno.ApellidoM + " " + Pagodb.GrupoAlumno.Alumno.Nombre,
-                        ConceptoPago = Pagodb.Precio.Concepto,
+                        ConceptoPago = Pagodb.DescripcionPago,
                         TipoPago = Pagodb.TipoPago,
-                        Importe = Pagodb.Precio.Importe
+                        Importe = Pagodb.Importe
                     });
                 }
 
@@ -461,7 +461,7 @@ namespace ColegioArceProject.Controllers
                                 Fecha = Pagodb.Fecha.ToString("dd/MM/yyyy"),
                                 Folio = Pagodb.id_pago.ToString().Length >= 2 ? "000" + Pagodb.id_pago : "0000" + Pagodb.id_pago,
                                 //DescripcionEscolaridad = pago.Alumno.Grupo.Escolaridad.Descripcion,
-                                ConceptoPago = "Abono de " + Pagodb.Precio.Concepto,
+                                ConceptoPago = "Abono de " + Pagodb.DescripcionPago,
                                 TipoPago = Pagodb.TipoPago,
                                 Importe = abono.Importe
                             });
@@ -471,9 +471,9 @@ namespace ColegioArceProject.Controllers
                     {
                         Fecha = Pagodb.Fecha.ToShortDateString(),
                         Folio = Pagodb.id_pago.ToString().Length >= 2 ? "000" + Pagodb.id_pago : "0000" + Pagodb.id_pago,
-                        ConceptoPago = Pagodb.Precio.Concepto,
+                        ConceptoPago = Pagodb.DescripcionPago,
                         TipoPago = Pagodb.TipoPago,
-                        Importe = Pagodb.Precio.Importe
+                        Importe = Pagodb.Importe
                     });
                 }
                 var datos = Pagos
