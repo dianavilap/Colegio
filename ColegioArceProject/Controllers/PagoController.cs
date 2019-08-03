@@ -240,7 +240,7 @@ namespace ColegioArceProject.Controllers
                     TipoPago = pago.comoPago,
                     Abono = false,
                     Folio = folio,
-                    DescripcionPago = pago.Precio.Substring(0,6) + " PROMOCIÓN"
+                    DescripcionPago = pago.Precio.Substring(0, 6) + " PROMOCIÓN"
                 };
 
                 db.Pago.Add(promo);
@@ -430,6 +430,7 @@ namespace ColegioArceProject.Controllers
 
 
             var alumnobusqueda = db.Alumno
+                              .Where(x => x.Activo == true)
                              .Select(x => new { Alumno = x.ApellidoP + " " + x.ApellidoM + " " + x.Nombre, id = x.id_Alumno })
                              .Distinct().ToList();
 
@@ -718,7 +719,7 @@ namespace ColegioArceProject.Controllers
             Paragraph concepto = new Paragraph("Colegiatura: " + pago.DescripcionPago, fontParagraph);
             Paragraph formaPago = new Paragraph("Forma de Pago: " + pago.TipoPago, fontParagraph);
 
-            Paragraph fecha = new Paragraph(DateTime.Now.ToString("dd/MM/yyyy"), fontParagraph);
+            Paragraph fecha = new Paragraph("Folio: " + pago.Folio + "          " + "Fecha: " + DateTime.Now.ToString("dd/MM/yyyy"), fontParagraph);
             fecha.Alignment = Element.ALIGN_RIGHT;
 
             var path = Server.MapPath("~/Content/images/LogoCA.png");
@@ -735,7 +736,7 @@ namespace ColegioArceProject.Controllers
             documento.AddHeader("Recibo de pago", pago.GrupoAlumno.Alumno.Nombre + " " + pago.GrupoAlumno.Alumno.ApellidoP + " " + pago.GrupoAlumno.Alumno.ApellidoM);
             documento.Add(Chunk.NEWLINE);
             documento.Add(Chunk.NEWLINE);
-            documento.Add(new Paragraph("Recibo de pago - Colegio Arce", fontTitle));
+            documento.Add(new Paragraph("Colegio Arce", fontTitle));
             //documento.Add(folio);
             documento.Add(fecha);
             documento.Add(Chunk.NEWLINE);
@@ -813,7 +814,7 @@ namespace ColegioArceProject.Controllers
             Paragraph concepto = new Paragraph("Colegiatura: " + abono.Pago.DescripcionPago, fontParagraph);
             Paragraph formaPago = new Paragraph("Forma de Pago: " + abono.Pago.TipoPago, fontParagraph);
 
-            Paragraph fecha = new Paragraph(DateTime.Now.ToString("dd/MM/yyyy"), fontParagraph);
+            Paragraph fecha = new Paragraph("Folio: " + abono.Folio + "          " + "Fecha: " + DateTime.Now.ToString("dd/MM/yyyy"), fontParagraph);
             fecha.Alignment = Element.ALIGN_RIGHT;
 
             var path = Server.MapPath("~/Content/images/LogoCA.png");
