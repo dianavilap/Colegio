@@ -15,7 +15,7 @@ using Image = iTextSharp.text.Image;
 namespace ColegioArceProject.Controllers
 {
     public class PagoController : UserAuthController
-    {
+    {//cambio
         private ColegioArce_Entities db = new ColegioArce_Entities();
 
         // GET: Pago cambio prueba
