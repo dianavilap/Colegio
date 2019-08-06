@@ -11,6 +11,7 @@ using ColegioArceProject.Models;
 
 namespace ColegioArceProject.Controllers
 {
+    [Authorize]
     public class RolController : UserAuthController
     {
         private ColegioArce_Entities db = new ColegioArce_Entities();

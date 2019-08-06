@@ -14,6 +14,7 @@ using System.Web.UI.WebControls;
 
 namespace ColegioArceProject.Controllers
 {
+    [Authorize]
     public class ReporteController : UserAuthController
     {
         private ColegioArce_Entities db = new ColegioArce_Entities();

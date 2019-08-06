@@ -13,6 +13,7 @@ using System.Web.Security;
 
 namespace ColegioArceProject.Controllers
 {
+    [Authorize]
     public class UsuarioController : UserAuthController
     {
         private ColegioArce_Entities db = new ColegioArce_Entities();

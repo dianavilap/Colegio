@@ -14,6 +14,7 @@ using Image = iTextSharp.text.Image;
 
 namespace ColegioArceProject.Controllers
 {
+    [Authorize]
     public class PagoController : UserAuthController
     {//cambio
         private ColegioArce_Entities db = new ColegioArce_Entities();
