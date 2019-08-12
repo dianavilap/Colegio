@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <label class="negrita">@Html.DisplayNameFor(model => model.FechaInsc)</label>
             <p>@Model.FechaInsc.ToString("dd/MM/yyyy")</p>
-            @Html.HiddenFor(model => model.FechaInsc, new { htmlAttributes = new { @Value = Model.FechaInsc, @id = "FechaNac" } })
+            @Html.HiddenFor(model => model.FechaInsc, new { htmlAttributes = new { @Value = Model.FechaInsc, @id = "FechaN" } })
         </div>
         <div class="col-md-12">
             <label class="negrita">@Html.DisplayNameFor(model => model.Nombre)</label>
@@ -36,7 +36,7 @@
 
         <div class="col-md-12">
             <label class="negrita">@Html.DisplayNameFor(model => model.FechaNac)</label>
-            <p>@Model.FechaNac.ToString("dd/MM/yyyy")</p>
+            <p>@Html.DisplayFor(model => model.FechaNac)</p>
             @Html.HiddenFor(model => model.FechaNac, new { htmlAttributes = new { @Value = Model.FechaNac, @id = "FechaNac" } })
         </div>
 

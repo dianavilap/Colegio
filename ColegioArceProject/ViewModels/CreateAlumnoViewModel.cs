@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ColegioArceProject.ViewModels
 {
@@ -92,19 +92,19 @@ namespace ColegioArceProject.ViewModels
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "{0} es requerido.")]
-        public DateTime FechaNac { get; set; }
+        public DateTime? FechaNac { get; set; }
 
         [Display(Name = "Fecha de Inscripción")]
         [Required(ErrorMessage = "{0} es requerido.")]
         public DateTime FechaInsc { get; set; }
 
-        //Para enviar fecha de inscripción con formato corto
+        //Para enviar  con fecha de inscripciónformato corto
         [Display(Name = "Fecha de Inscripción")]
         public string FechaI { get; set; }
 
-        [Display(Name = "Fecha de Nacimiento")]
-        [Required(ErrorMessage = "{0} es requerido.")]
-        public DateTime FechaNacEditar { get; set; }
+        //[Display(Name = "Fecha de Nacimiento")]
+        //[Required(ErrorMessage = "{0} es requerido.")]
+        //public DateTime FechaNacEditar { get; set; }
 
         [Display(Name = "Sexo (F-M)")]
         [Required(ErrorMessage = "{0} es requerido.")]

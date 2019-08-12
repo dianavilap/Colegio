@@ -130,6 +130,7 @@ namespace ColegioArceProject.Controllers
                     .Include(x => x.Pago)
                     .Where(x => x.Grupo.id_Grupo == id)
                     .Where(x => x.Activo == true)
+                    .OrderBy(x=>x.Alumno.ApellidoP)
                     .ToList();
 
                 var grupo = db.Grupo.SingleOrDefault(x => x.id_Grupo == id);

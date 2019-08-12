@@ -122,9 +122,9 @@ namespace ColegioArceProject.Controllers
             Alumno.ServicioM= alumnoDb.Alumno.ServicioMed;
 
 
-            if (Alumno.FechaNac != null)
+            if (alumnoDb.Alumno.FechaNac.HasValue)
             {
-                Alumno.FechaNac = alumnoDb.Alumno.FechaNac.Date;
+                Alumno.FechaNac = alumnoDb.Alumno.FechaNac;
             }
             return View(Alumno);
         }
@@ -243,6 +243,10 @@ namespace ColegioArceProject.Controllers
             }
             var Alumno = new CreateAlumnoViewModel();
 
+            if (GrupoA.Alumno.FechaNac.HasValue)
+            {
+                Alumno.FechaNac = GrupoA.Alumno.FechaNac;
+            }
             Alumno.id_Alumno = GrupoA.Alumno.id_Alumno;
             Alumno.Nombre = GrupoA.Alumno.Nombre;
             Alumno.ApellidoP = GrupoA.Alumno.ApellidoP;
@@ -265,7 +269,7 @@ namespace ColegioArceProject.Controllers
             Alumno.Alergias = GrupoA.Alumno.Alergias;
             Alumno.Trabajo_m = GrupoA.Alumno.Trabajo_m;
             Alumno.Trabajo_p = GrupoA.Alumno.Trabajo_p;
-            Alumno.FechaNacEditar = GrupoA.Alumno.FechaNac;
+            
             Alumno.Edad = GrupoA.Alumno.Edad;
             Alumno.FechaInsc = GrupoA.Alumno.FechaInsc;
             Alumno.tel_A = GrupoA.Alumno.Tel_Alumno ;
@@ -305,7 +309,10 @@ namespace ColegioArceProject.Controllers
             
             
                 var alumnoDb = new Alumno();
-
+            
+            
+                string date = Alumno.FechaNac.HasValue ? Alumno.FechaNac.Value.ToString("dd/MM/yyyy") : string.Empty;
+            DateTime nacFecha = Convert.ToDateTime(date);
                 alumnoDb.id_Alumno = Alumno.id_Alumno;
                 alumnoDb.Nombre = Alumno.Nombre;
                 alumnoDb.ApellidoP = Alumno.ApellidoP;
@@ -324,8 +331,10 @@ namespace ColegioArceProject.Controllers
                 alumnoDb.TipoSangre = Alumno.TipoSangre;
                 alumnoDb.Trabajo_m = Alumno.Trabajo_m;
                 alumnoDb.Trabajo_p = Alumno.Trabajo_p;
-                alumnoDb.FechaNac = Alumno.FechaNacEditar;
-                alumnoDb.Alergias = Alumno.Alergias;
+            alumnoDb.FechaNac = DateTime.ParseExact(date, "dd/MM/yyyy", null);
+            
+            //  alumnoDb.FechaNac = Alumno.FechaNacEditar;
+            alumnoDb.Alergias = Alumno.Alergias;
                 alumnoDb.Edad = Alumno.Edad;
                 alumnoDb.FechaInsc = Alumno.FechaInsc;
                 alumnoDb.Tel_Alumno = Alumno.tel_A;
@@ -342,8 +351,8 @@ namespace ColegioArceProject.Controllers
             alumnoDb.TelEmergencia = Alumno.TelEmergencia;
             alumnoDb.ServicioMed = Alumno.ServicioM;
             alumnoDb.Peso = Alumno.Peso;
-
-            db.Entry(alumnoDb).State = EntityState.Modified;
+           
+                db.Entry(alumnoDb).State = EntityState.Modified;
                 db.SaveChanges();
 
                 var GrupoA = db.GrupoAlumno.Where(x=>x.id_Alumno == Alumno.id_Alumno).FirstOrDefault();
@@ -652,11 +661,14 @@ namespace ColegioArceProject.Controllers
                 .Include(x => x.Alumno)
                 .Where(x => x.id_Alumno == alumno.id_Alumno).FirstOrDefault();
 
+            
+            string nacFecha = alumno.FechaNac.HasValue ? alumno.FechaNac.Value.ToString("dd/mm/yyyy") : string.Empty;
+
             Paragraph title = new Paragraph(" COLEGIO ARCE ", fontBlack);
             Paragraph Solicitud = new Paragraph(" Solicitud de Inscripción ", fontBlack);
             Paragraph Fecha = new Paragraph(" Fecha de Inscripcion : "+alumno.FechaInsc, fontParagraph);
             Paragraph Nombre = new Paragraph(" Nombre:  "+alumno.ApellidoP+" "+alumno.ApellidoM+" "+alumno.Nombre + "     Sexo : "+alumno.Sexo, fontParagraph);
-            Paragraph FechaEdad = new Paragraph(" Fecha de Nacimiento : "+alumno.FechaNac.ToString("dd/MM/yyyy") +"       Edad : "+ alumno.Edad, fontParagraph);
+            Paragraph FechaEdad = new Paragraph(" Fecha de Nacimiento : " + nacFecha +"       Edad : "+ alumno.Edad, fontParagraph);
             Paragraph DireccionTel = new Paragraph(" Dirección : "+alumno.Direccion+"       Telefono : "+alumno.Tel_Alumno, fontParagraph);
             Paragraph EscuelaP = new Paragraph(" Escuela de Procedencia : "+ alumno.EscuelaP, fontParagraph);
             Paragraph Correo = new Paragraph(" Email : "+alumno.Correo, fontParagraph);

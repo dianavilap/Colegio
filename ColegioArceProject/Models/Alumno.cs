@@ -32,7 +32,7 @@ namespace ColegioArceProject.Models
         public string tel_m { get; set; }
         public string Correo { get; set; }
         public bool Activo { get; set; }
-        public System.DateTime FechaNac { get; set; }
+        public Nullable<System.DateTime> FechaNac { get; set; }
         public string Sexo { get; set; }
         public string Trabajo_p { get; set; }
         public string Trabajo_m { get; set; }
