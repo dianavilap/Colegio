@@ -738,6 +738,10 @@ namespace ColegioArceProject.Controllers
             documento.Add(Chunk.NEWLINE);
             documento.Add(Chunk.NEWLINE);
             documento.Add(Chunk.NEWLINE);
+            documento.Add(Chunk.NEWLINE);
+            documento.Add(Chunk.NEWLINE);
+            documento.Add(Chunk.NEWLINE);
+            documento.Add(Chunk.NEWLINE);
             // documento.Add(new Paragraph("Colegio Arce", fontTitle));
             //documento.Add(folio);
             documento.Add(fecha);
@@ -832,6 +836,10 @@ namespace ColegioArceProject.Controllers
 
 
             documento.AddHeader("Recibo de Abono: ", abono.Pago.GrupoAlumno.Alumno.Nombre + " " + abono.Pago.GrupoAlumno.Alumno.ApellidoP + " " + abono.Pago.GrupoAlumno.Alumno.ApellidoM);
+            documento.Add(Chunk.NEWLINE);
+            documento.Add(Chunk.NEWLINE);
+            documento.Add(Chunk.NEWLINE);
+            documento.Add(Chunk.NEWLINE);
             documento.Add(Chunk.NEWLINE);
             documento.Add(Chunk.NEWLINE);
             documento.Add(Chunk.NEWLINE);
