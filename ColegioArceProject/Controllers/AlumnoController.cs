@@ -110,8 +110,8 @@ namespace ColegioArceProject.Controllers
             Alumno.Edad = alumnoDb.Alumno.Edad;
             Alumno.tel_A = alumnoDb.Alumno.Tel_Alumno;
             Alumno.DireccionP = alumnoDb.Alumno.DireccionTP;
-            Alumno.Peso = alumnoDb.Alumno.DireccionTM;
-            Alumno.Estatura = alumnoDb.Alumno.DireccionTM;
+            Alumno.Peso = alumnoDb.Alumno.Peso;
+            Alumno.Estatura = alumnoDb.Alumno.Estatura;
             Alumno.Lesion = alumnoDb.Alumno.Lesion;
             Alumno.TratamientoM = alumnoDb.Alumno.TratamientoMed;
             Alumno.Enfermedad = alumnoDb.Alumno.Enfermedad;
@@ -276,8 +276,8 @@ namespace ColegioArceProject.Controllers
             Alumno.DireccionP = GrupoA.Alumno.DireccionTP;
             Alumno.DireccionM = GrupoA.Alumno.DireccionTM;
             Alumno.EscuelaP = GrupoA.Alumno.EscuelaP;
-            Alumno.Peso = GrupoA.Alumno.DireccionTM;
-            Alumno.Estatura = GrupoA.Alumno.DireccionTM;
+            Alumno.Peso = GrupoA.Alumno.Peso;
+            Alumno.Estatura = GrupoA.Alumno.Estatura;
             Alumno.Lesion = GrupoA.Alumno.Lesion;
             Alumno.TratamientoM = GrupoA.Alumno.TratamientoMed;
             Alumno.Enfermedad = GrupoA.Alumno.Enfermedad;
@@ -423,8 +423,8 @@ namespace ColegioArceProject.Controllers
             Alumno.DireccionP = alumnoDb.Alumno.DireccionTP;
             Alumno.DireccionM = alumnoDb.Alumno.DireccionTM;
             Alumno.EscuelaP = alumnoDb.Alumno.EscuelaP;
-            Alumno.Peso = alumnoDb.Alumno.DireccionTM;
-            Alumno.Estatura = alumnoDb.Alumno.DireccionTM;
+            Alumno.Peso = alumnoDb.Alumno.Peso;
+            Alumno.Estatura = alumnoDb.Alumno.Estatura;
             Alumno.Lesion = alumnoDb.Alumno.Lesion;
             Alumno.TratamientoM = alumnoDb.Alumno.TratamientoMed;
             Alumno.Enfermedad = alumnoDb.Alumno.Enfermedad;
