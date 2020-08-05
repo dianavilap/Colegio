@@ -487,14 +487,23 @@ namespace ColegioArceProject.Controllers
             // PARA ADEUDO DE SEMESTRES ANTERIORES
             string descripcion = "";
 
-            var gruposAnteriores = db.GrupoAlumno.Include(x => x.Grupo).Include(x => x.Grupo.Escolaridad).Include(x => x.Pago).Where(x => x.id_Alumno == id).Where(x => x.Activo == false).ToList();
+            var actual = db.GrupoAlumno.Include(x => x.Grupo).Include(x => x.Grupo.Escolaridad).Include(x => x.Pago).Where(x => x.id_Alumno == id).Where(x => x.Activo == true).FirstOrDefault();
 
+            var gruposAnteriores = db.GrupoAlumno.Include(x => x.Grupo).Include(x => x.Grupo.Escolaridad).Include(x => x.Pago).Where(x => x.id_Alumno == id).Where(x => x.id_Grupo < actual.id_Grupo).Where(x => x.Activo == false).ToList();
 
             foreach (var item in gruposAnteriores)
             {
                 if (item.Pago.Where(x => x.Activo == true).ToList().Count < 5)
                 {
+                    if (item.Pago.Where(x => x.Activo == true).ToList().Count == 0)
+                    {
+
+                        precios = precios.Where(x => x.id_Precio == 42).ToList();
+                        return Json(precios.Select(x => new { Descrpcion = x.Concepto + " " + x.Importe.ToString("C"), Id = x.id_Precio, Pago = 0, idGrupo = item.id_GrupoAlumno }).ToList(), JsonRequestBehavior.AllowGet);
+                    }
+
                     var pagopendiente = pagos.Where(x => x.id_GrupoAlumno == item.id_GrupoAlumno).OrderBy(x => x.id_pago).LastOrDefault();
+
                     var totalpagos = 0;
                     if ((pagopendiente.Activo == true) && (pagopendiente.Precio.Importe > pagopendiente.Importe))
                     {
@@ -504,19 +513,17 @@ namespace ColegioArceProject.Controllers
                         //totalpagos = item.Pago.Where(x => x.Activo == true).ToList().Count();
                         //descripcion = "PAGO " + totalpagos.ToString();
 
-                        var valoresabono = precioabono.Select(x => new { Descrpcion = x.Concepto + " " + "$" + importe + ".00", Id = x.id_Precio, Pago = pagopendiente.id_pago, idGrupo = item.id_GrupoAlumno }).ToList();
+                        totalpagos = item.Pago.Where(x => x.Activo == true).ToList().Count() - 1;
+                        descripcion = "PAGO " + totalpagos.ToString();
+
+                        var valoresabono = precioabono.Select(x => new { Descrpcion = descripcion + " " + x.Concepto + " " + "$" + importe + ".00", Id = x.id_Precio, Pago = pagopendiente.id_pago, idGrupo = item.id_GrupoAlumno }).ToList();
 
                         return Json(valoresabono, JsonRequestBehavior.AllowGet);
 
                     }
 
 
-                    if (item.Pago.Count == 0)
-                    {
-
-                        precios = precios.Where(x => x.id_Precio == 42).ToList();
-                        return Json(precios.Select(x => new { Descrpcion = x.Concepto + " " + x.Importe.ToString("C"), Id = x.id_Precio, Pago = 0, idGrupo = item.id_GrupoAlumno }).ToList(), JsonRequestBehavior.AllowGet);
-                    }
+                    
 
                     totalpagos = item.Pago.Where(x => x.Activo == true).ToList().Count();
 
@@ -526,7 +533,32 @@ namespace ColegioArceProject.Controllers
                     return Json(precios.Select(x => new { Descrpcion = descripcion + " " + x.Concepto + " " + x.Importe.ToString("C"), Id = x.id_Precio, Pago = 0, idGrupo = item.id_GrupoAlumno }).ToList(), JsonRequestBehavior.AllowGet);
 
                 }
+
+                if (item.Pago.Where(x => x.Activo == true).ToList().Count == 5)
+                {
+                    var pagopendiente = pagos.Where(x => x.id_GrupoAlumno == item.id_GrupoAlumno).OrderBy(x => x.id_pago).LastOrDefault();
+
+                    var totalpagos = 0;
+                    if ((pagopendiente.Activo == true) && (pagopendiente.Precio.Importe > pagopendiente.Importe))
+                    {
+                        var precioabono = db.Precio.Where(x => x.id_Precio == pagopendiente.id_Precio).ToList();
+                        var importe = pagopendiente.Precio.Importe - pagopendiente.Importe;
+
+                        //totalpagos = item.Pago.Where(x => x.Activo == true).ToList().Count();
+                        //descripcion = "PAGO " + totalpagos.ToString();
+
+                        totalpagos = item.Pago.Where(x => x.Activo == true).ToList().Count() - 1;
+                        descripcion = "PAGO " + totalpagos.ToString();
+
+                        var valoresabono = precioabono.Select(x => new { Descrpcion = descripcion + " " + x.Concepto + " " + "$" + importe + ".00", Id = x.id_Precio, Pago = pagopendiente.id_pago, idGrupo = item.id_GrupoAlumno }).ToList();
+
+                        return Json(valoresabono, JsonRequestBehavior.AllowGet);
+
+                    }
+                }
             }
+
+
 
             // PARA ADEUDO DEL SEMESTRE ACTUAL
 
@@ -553,13 +585,28 @@ namespace ColegioArceProject.Controllers
 
             if (noPagos > 0)
             {
-                var pagopendiente = pagos.Where(x => x.id_GrupoAlumno == grupoActual.id_GrupoAlumno).OrderBy(x => x.id_pago).LastOrDefault();
+                var pagopendiente = pagos.Where(x => x.id_GrupoAlumno == grupoActual.id_GrupoAlumno).Where(x => x.Activo == true).OrderBy(x => x.id_pago).LastOrDefault();
                 if ((pagopendiente.Activo == true) && (pagopendiente.Precio.Importe > pagopendiente.Importe))
                 {
                     var precioabono = db.Precio.Where(x => x.id_Precio == pagopendiente.id_Precio).ToList();
                     var importe = pagopendiente.Precio.Importe - pagopendiente.Importe;
 
-                    var valoresabono = precioabono.Select(x => new { Descrpcion = x.Concepto + " " + "$" + importe + ".00", Id = x.id_Precio, Pago = pagopendiente.id_pago, idGrupo = grupoActual.id_GrupoAlumno }).ToList();
+                    var nopagostotal = noPagos - 1;
+
+                    var conceptopagoincompleto = "";
+
+                    if (pagopendiente.Precio.id_Precio == 42)
+                    {
+                        conceptopagoincompleto = "";
+                    }
+                    else
+                    {
+                        conceptopagoincompleto = "PAGO " + nopagostotal.ToString() + " ";
+                    }
+
+                    
+
+                    var valoresabono = precioabono.Select(x => new { Descrpcion = conceptopagoincompleto + x.Concepto + " " + "$" + importe + ".00", Id = x.id_Precio, Pago = pagopendiente.id_pago, idGrupo = grupoActual.id_GrupoAlumno }).ToList();
 
                     return Json(valoresabono, JsonRequestBehavior.AllowGet);
 
@@ -615,8 +662,11 @@ namespace ColegioArceProject.Controllers
 
                         case 3:
                         case 8:
-                        case 11:
                             precios = precios.Where(x => x.id_Precio == 43).ToList();
+                            descripcion = "PAGO 2";
+                            break;
+                        case 11:
+                            precios = precios.Where(x => x.id_Precio == 45).ToList();
                             descripcion = "PAGO 2";
                             break;
                         default:
@@ -642,11 +692,14 @@ namespace ColegioArceProject.Controllers
                             break;
                         case 3:
                         case 8:
-                        case 11:
                         case 4:
                         case 9:
                         case 12:
                             precios = precios.Where(x => x.id_Precio == 43).ToList();
+                            descripcion = "PAGO 3";
+                            break;
+                        case 11:
+                            precios = precios.Where(x => x.id_Precio == 45).ToList();
                             descripcion = "PAGO 3";
                             break;
                         default:
@@ -690,7 +743,54 @@ namespace ColegioArceProject.Controllers
                     break;
             };
 
+            //aqui va para pago por adelantado en semestres
+            if (noPagos == 5)
+            {
 
+                var gruposFuturos = db.GrupoAlumno.Include(x => x.Grupo).Include(x => x.Grupo.Escolaridad).Include(x => x.Pago).Where(x => x.id_Alumno == id).Where(x => x.id_Grupo > actual.id_Grupo).Where(x => x.Activo == false).ToList();
+
+                foreach (var item in gruposFuturos)
+                {
+                    if (item.Pago.Where(x => x.Activo == false).ToList().Count < 5)
+                    {
+                        var pagopendiente = pagos.Where(x => x.id_GrupoAlumno == item.id_GrupoAlumno).OrderBy(x => x.id_pago).LastOrDefault();
+                        var totalpagos = 0;
+                        if (pagopendiente != null)
+                        {
+                            if ((pagopendiente.Activo == true) && (pagopendiente.Precio.Importe > pagopendiente.Importe))
+                            {
+                                var precioabono = db.Precio.Where(x => x.id_Precio == pagopendiente.id_Precio).ToList();
+                                var importe = pagopendiente.Precio.Importe - pagopendiente.Importe;
+
+                                //totalpagos = item.Pago.Where(x => x.Activo == true).ToList().Count();
+                                //descripcion = "PAGO " + totalpagos.ToString();
+
+                                var valoresabono = precioabono.Select(x => new { Descrpcion = x.Concepto + " " + "$" + importe + ".00", Id = x.id_Precio, Pago = pagopendiente.id_pago, idGrupo = item.id_GrupoAlumno }).ToList();
+
+                                return Json(valoresabono, JsonRequestBehavior.AllowGet);
+
+                            }
+                        }
+
+
+                        if (item.Pago.Count == 0)
+                        {
+
+                            precios = precios.Where(x => x.id_Precio == 42).ToList();
+                            return Json(precios.Select(x => new { Descrpcion = x.Concepto + " " + x.Importe.ToString("C"), Id = x.id_Precio, Pago = 0, idGrupo = item.id_GrupoAlumno }).ToList(), JsonRequestBehavior.AllowGet);
+                        }
+
+                        totalpagos = item.Pago.Where(x => x.Activo == true).ToList().Count();
+
+                        descripcion = "PAGO " + totalpagos.ToString();
+
+                        precios = precios.Where(x => x.id_Precio == 43).ToList();
+                        return Json(precios.Select(x => new { Descrpcion = descripcion + " " + x.Concepto + " " + x.Importe.ToString("C"), Id = x.id_Precio, Pago = 0, idGrupo = item.id_GrupoAlumno }).ToList(), JsonRequestBehavior.AllowGet);
+
+                    }
+                }
+
+            }
 
             var valores = precios.Select(x => new { Descrpcion = descripcion + " " + x.Concepto + " " + x.Importe.ToString("C"), Id = x.id_Precio, Pago = 0, idGrupo = grupoActual.id_GrupoAlumno }).ToList();
 
@@ -735,18 +835,11 @@ namespace ColegioArceProject.Controllers
             montoletras = ToUpperFirstLetter(montoletras.ToLower());
 
             documento.AddHeader("Recibo de pago", pago.GrupoAlumno.Alumno.Nombre + " " + pago.GrupoAlumno.Alumno.ApellidoP + " " + pago.GrupoAlumno.Alumno.ApellidoM);
-            documento.Add(Chunk.NEWLINE);
-            documento.Add(Chunk.NEWLINE);
-            documento.Add(Chunk.NEWLINE);
-            // documento.Add(new Paragraph("Colegio Arce", fontTitle));
-            //documento.Add(folio);
+
+            documento.Add(new Paragraph("\n\n"));
+            documento.Add(new Paragraph("\n\n"));
+            documento.Add(new Paragraph("\n"));
             documento.Add(fecha);
-            documento.Add(Chunk.NEWLINE);
-            documento.Add(Chunk.NEWLINE);
-            documento.Add(Chunk.NEWLINE);
-            documento.Add(Chunk.NEWLINE);
-            documento.Add(Chunk.NEWLINE);
-            documento.Add(Chunk.NEWLINE);
             documento.Add(Chunk.NEWLINE);
             documento.Add(alumno);
             documento.Add(escolaridad);
@@ -837,18 +930,10 @@ namespace ColegioArceProject.Controllers
 
 
             documento.AddHeader("Recibo de Abono: ", abono.Pago.GrupoAlumno.Alumno.Nombre + " " + abono.Pago.GrupoAlumno.Alumno.ApellidoP + " " + abono.Pago.GrupoAlumno.Alumno.ApellidoM);
-            documento.Add(Chunk.NEWLINE);
-            documento.Add(Chunk.NEWLINE);
-            documento.Add(Chunk.NEWLINE);
-            //documento.Add(new Paragraph("Recibo de abono - Colegio Arce", fontTitle));
-            //documento.Add(folio);
+            documento.Add(new Paragraph("\n\n"));
+            documento.Add(new Paragraph("\n\n"));
+            documento.Add(new Paragraph("\n"));
             documento.Add(fecha);
-            documento.Add(Chunk.NEWLINE);
-            documento.Add(Chunk.NEWLINE);
-            documento.Add(Chunk.NEWLINE);
-            documento.Add(Chunk.NEWLINE);
-            documento.Add(Chunk.NEWLINE);
-            documento.Add(Chunk.NEWLINE);
             documento.Add(Chunk.NEWLINE);
             documento.Add(alumno);
             documento.Add(escolaridad);
@@ -969,7 +1054,7 @@ namespace ColegioArceProject.Controllers
                             Fecha = Pagodb.Fecha.ToString("dd/MM/yyyy"),
                             Folio = abono.Folio.ToString(),
                             //DescripcionEscolaridad = pago.Alumno.Grupo.Escolaridad.Descripcion,
-                            ConceptoPago = "Abono de " + Pagodb.Precio.Concepto,
+                            ConceptoPago = "Abono de " + Pagodb.DescripcionPago,
                             Importe = abono.Importe
                         });
                     }
@@ -980,7 +1065,7 @@ namespace ColegioArceProject.Controllers
                     {
                         Fecha = Pagodb.Fecha.ToShortDateString(),
                         Folio = Pagodb.Folio.ToString(),
-                        ConceptoPago = Pagodb.Precio.Concepto,
+                        ConceptoPago = Pagodb.DescripcionPago,
                         Importe = Pagodb.Importe
                     });
                 }

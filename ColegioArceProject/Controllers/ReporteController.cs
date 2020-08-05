@@ -55,6 +55,7 @@ namespace ColegioArceProject.Controllers
             var ReporteAlumno = new ReporteAlumnoViewModel();
 
             var alumnobusqueda = db.Alumno
+                .Where(x => x.Activo == true)
                 .Select(x => new { NombreCompleto = x.ApellidoP + " " + x.ApellidoM + " " + x.Nombre, id = x.id_Alumno })
                 .Distinct().ToList();
 
@@ -83,7 +84,7 @@ namespace ColegioArceProject.Controllers
                         Reportevm.Add(new ReporteViewModel
                         {
                             Fecha = Pagodb.Fecha.ToString("dd/MM/yyyy"),
-                            Folio = Pagodb.id_pago.ToString().Length >= 2 ? "000" + Pagodb.id_pago : "0000" + Pagodb.id_pago,
+                            Folio = Pagodb.id_pago.ToString().Length >= 2 ? "000" + Pagodb.Folio : "0000" + Pagodb.Folio,
                             //DescripcionEscolaridad = pago.Alumno.Grupo.Escolaridad.Descripcion,
                             ConceptoPago = abono.Cancelado == true ? "Folio CANCELADO " + Pagodb.DescripcionPago : "Abono de " + Pagodb.DescripcionPago,
                             TipoPago = abono.TipoPago,
@@ -96,7 +97,7 @@ namespace ColegioArceProject.Controllers
                     Reportevm.Add(new ReporteViewModel
                     {
                         Fecha = Pagodb.Fecha.ToString("dd/MM/yyyy"),
-                        Folio = Pagodb.id_pago.ToString().Length >= 2 ? "000" + Pagodb.id_pago : "0000" + Pagodb.id_pago,
+                        Folio = Pagodb.id_pago.ToString().Length >= 2 ? "000" + Pagodb.Folio : "0000" + Pagodb.Folio,
                         ConceptoPago = Pagodb.Activo == true ? Pagodb.DescripcionPago : "Folio CANCELADO " + Pagodb.DescripcionPago,
                         TipoPago = Pagodb.TipoPago,
                         Importe = Pagodb.Importe
